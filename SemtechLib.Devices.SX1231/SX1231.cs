@@ -835,120 +835,93 @@ namespace SemtechLib.Devices.SX1231
 			if (IsOpen)
 			{
 				byte data = 0;
-				if (!Read(0x10, ref data))
+				if (!Read(0x42, ref data))
 					throw new Exception("Unable to read register RegVersion");
-				if (!Read(0x10, ref data))
+				if (!Read(0x42, ref data))
 					throw new Exception("Unable to read register RegVersion");
 				Version = (((data & 0xF0) >> 4)).ToString() + "." + ((data & 0x0F)).ToString();
 			}
 
 			m_registers = new RegisterCollection();
 
-			m_registers.Add(new Register("RegFifo", 0x00, 0x00, true, true));
-			m_registers.Add(new Register("RegOpMode", 0x01, 0x04, false, true));
-			m_registers.Add(new Register("RegDataModul", 0x02, 0, false, true));
-			m_registers.Add(new Register("RegBitrateMsb", 0x03, 0x1A, false, true));
-			m_registers.Add(new Register("RegBitrateLsb", 0x04, 0x0B, false, true));
-			m_registers.Add(new Register("RegFdevMsb", 0x05, 0x00, false, true));
-			m_registers.Add(new Register("RegFdevLsb", 0x06, 0x52, false, true));
-			m_registers.Add(new Register("RegFrfMsb", 0x07, 0xE4, false, true));
-			m_registers.Add(new Register("RegFrfMid", 0x08, 0xC0, false, true));
-			m_registers.Add(new Register("RegFrfLsb", 0x09, 0x00, false, true));
-			m_registers.Add(new Register("RegOsc1", 0x0A, 0x41, false, true));
-
-			if (Version == "2.1")
-				m_registers.Add(new Register("RegOsc2", 0x0B, 0x40, false, true));
-			else
-				m_registers.Add(new Register("RegAfcCtrl", 0x0B, 0, false, true));
-
-			m_registers.Add(new Register("RegLowBat", 0x0C, 2, false, true));
-			m_registers.Add(new Register("RegListen1", 0x0D, 0xA2, false, true));
-			m_registers.Add(new Register("RegListen2", 0x0E, 0xF5, false, true));
-			m_registers.Add(new Register("RegListen3", 0x0F, 0x20, false, true));
-			m_registers.Add(new Register("RegVersion", 0x10, 0x23, true, true));
-			m_registers.Add(new Register("RegPaLevel", 0x11, 0x9F, false, true));
-			m_registers.Add(new Register("RegPaRamp", 0x12, 0x09, false, true));
-			m_registers.Add(new Register("RegOcp", 0x13, 0x1B, false, true));
-			if (Version == "2.1")
-			{
-				m_registers.Add(new Register("RegAgcRef", 0x14, 0x40, false, true));
-				m_registers.Add(new Register("RegAgcThresh1", 0x15, 0xB0, false, true));
-				m_registers.Add(new Register("RegAgcThresh2", 0x16, 0x7B, false, true));
-				m_registers.Add(new Register("RegAgcThresh3", 0x17, 0x9B, false, true));
-			}
-			else
-			{
-				m_registers.Add(new Register("Reserved14", 0x14, 0x40, false, true));
-				m_registers.Add(new Register("Reserved15", 0x15, 0xb0, false, true));
-				m_registers.Add(new Register("Reserved16", 0x16, 0x7b, false, true));
-				m_registers.Add(new Register("Reserved17", 0x17, 0x9b, false, true));
-			}
-
-			m_registers.Add(new Register("RegLna", 0x18, 0x88, false, true));
-			m_registers.Add(new Register("RegRxBw", 0x19, 0x55, false, true));
-			m_registers.Add(new Register("RegAfcBw", 0x1A, 0x8b, false, true));
-			m_registers.Add(new Register("RegOokPeak", 0x1B, 0x40, false, true));
-			m_registers.Add(new Register("RegOokAvg", 0x1C, 0x80, false, true));
-			m_registers.Add(new Register("RegOokFix", 0x1D, 6, false, true));
-			m_registers.Add(new Register("RegAfcFei", 0x1E, 0x10, false, true));
-			m_registers.Add(new Register("RegAfcMsb", 0x1F, 0, false, true));
-			m_registers.Add(new Register("RegAfcLsb", 0x20, 0, false, true));
-			m_registers.Add(new Register("RegFeiMsb", 0x21, 0, false, true));
-			m_registers.Add(new Register("RegFeiLsb", 0x22, 0, false, true));
-			m_registers.Add(new Register("RegRssiConfig", 0x23, 2, true, true));
-			m_registers.Add(new Register("RegRssiValue", 0x24, 0xFF, true, true));
-			m_registers.Add(new Register("RegDioMapping1", 0x25, 0x00, false, true));
-			m_registers.Add(new Register("RegDioMapping2", 0x26, 7, false, true));
-			m_registers.Add(new Register("RegIrqFlags1", 0x27, 0x80, true, true));
-			m_registers.Add(new Register("RegIrqFlags2", 0x28, 0, true, true));
-			m_registers.Add(new Register("RegRssiThresh", 0x29, 0xe4, false, true));
-			m_registers.Add(new Register("RegRxTimeout1", 0x2A, 0, false, true));
-			m_registers.Add(new Register("RegRxTimeout2", 0x2B, 0, false, true));
-			m_registers.Add(new Register("RegPreambleMsb", 0x2C, 0, false, true));
-			m_registers.Add(new Register("RegPreambleLsb", 0x2D, 3, false, true));
-			m_registers.Add(new Register("RegSyncConfig", 0x2E, 0x98, false, true));
-			m_registers.Add(new Register("RegSyncValue1", 0x2F, 0, false, true));
-			m_registers.Add(new Register("RegSyncValue2", 0x30, 0, false, true));
-			m_registers.Add(new Register("RegSyncValue3", 0x31, 0, false, true));
-			m_registers.Add(new Register("RegSyncValue4", 0x32, 0, false, true));
-			m_registers.Add(new Register("RegSyncValue5", 0x33, 0, false, true));
-			m_registers.Add(new Register("RegSyncValue6", 0x34, 0, false, true));
-			m_registers.Add(new Register("RegSyncValue7", 0x35, 0, false, true));
-			m_registers.Add(new Register("RegSyncValue8", 0x36, 0, false, true));
-			m_registers.Add(new Register("RegPacketConfig1", 0x37, 1, false, true));
-			m_registers.Add(new Register("RegPayloadLength", 0x38, 0x40, false, true));
-			m_registers.Add(new Register("RegNodeAdrs", 0x39, 0, false, true));
-			m_registers.Add(new Register("RegBroadcastAdrs", 0x3A, 0, false, true));
-			m_registers.Add(new Register("RegAutoModes", 0x3B, 0, false, true));
-			m_registers.Add(new Register("RegFifoThresh", 0x3C, 0x8F, false, true));
-			m_registers.Add(new Register("RegPacketConfig2", 0x3D, 2, false, true));
-			m_registers.Add(new Register("RegAesKey1", 0x3E, 0, false, true));
-			m_registers.Add(new Register("RegAesKey2", 0x3F, 0, false, true));
-			m_registers.Add(new Register("RegAesKey3", 0x40, 0, false, true));
-			m_registers.Add(new Register("RegAesKey4", 0x41, 0, false, true));
-			m_registers.Add(new Register("RegAesKey5", 0x42, 0, false, true));
-			m_registers.Add(new Register("RegAesKey6", 0x43, 0, false, true));
-			m_registers.Add(new Register("RegAesKey7", 0x44, 0, false, true));
-			m_registers.Add(new Register("RegAesKey8", 0x45, 0, false, true));
-			m_registers.Add(new Register("RegAesKey9", 0x46, 0, false, true));
-			m_registers.Add(new Register("RegAesKey10", 0x47, 0, false, true));
-			m_registers.Add(new Register("RegAesKey11", 0x48, 0, false, true));
-			m_registers.Add(new Register("RegAesKey12", 0x49, 0, false, true));
-			m_registers.Add(new Register("RegAesKey13", 0x4A, 0, false, true));
-			m_registers.Add(new Register("RegAesKey14", 0x4B, 0, false, true));
-			m_registers.Add(new Register("RegAesKey15", 0x4C, 0, false, true));
-			m_registers.Add(new Register("RegAesKey16", 0x4D, 0, false, true));
-			m_registers.Add(new Register("RegTemp1", 0x4E, 1, true, true));
-			m_registers.Add(new Register("RegTemp2", 0x4F, 0, true, true));
-
-			if (Version != "2.1")
-			{
-				m_registers.Add(new Register("RegTestLna", 0x58, 0x1b, false, true));
-				if (Version == "2.3")
-					m_registers.Add(new Register("RegTestDagc", 0x6F, 0x30, false, true));
-
-				m_registers.Add(new Register("RegTestAfc", 0x71, 0, false, true));
-			}
+            m_registers.Add(new Register("RegFifo", 0x00, 0x00, true, true));
+            m_registers.Add(new Register("RegOpMode", 0x01, 0x09, false, true));
+            m_registers.Add(new Register("RegBitrateMsb", 0x02, 0x03, false, true));
+            m_registers.Add(new Register("RegBitrateLsb", 0x03, 0x41, false, true));
+            m_registers.Add(new Register("RegFdevMsb", 0x04, 0x01, false, true));
+            m_registers.Add(new Register("RegFdevLsb", 0x05, 0x38, false, true));
+            m_registers.Add(new Register("RegFrfMsb", 0x06, 0xD8, false, true));
+            m_registers.Add(new Register("RegFrfMid", 0x07, 0x0A, false, true));
+            m_registers.Add(new Register("RegFrfLsb", 0x08, 0x00, false, true));
+            m_registers.Add(new Register("RegPaConfig", 0x09, 0x0F, false, true));
+            m_registers.Add(new Register("RegPaRamp", 0x0A, 0x06, false, true));
+            m_registers.Add(new Register("RegOcp", 0x0B, 0x37, false, true));
+            m_registers.Add(new Register("RegLna", 0x0C, 0xA3, false, true));
+            m_registers.Add(new Register("RegRxConfig", 0x0D, 0xBE, false, true));
+            m_registers.Add(new Register("RegRssiConfig", 0x0E, 0x02, false, true));
+            m_registers.Add(new Register("RegRssiCollision", 0x0F, 0x0F, false, true));
+            m_registers.Add(new Register("RegRssiThresh", 0x10, 0x10, false, true));
+            m_registers.Add(new Register("RegRssiValue", 0x11, 0x00, false, true));
+            m_registers.Add(new Register("RegRxBw", 0x12, 0x12, false, true));
+            m_registers.Add(new Register("RegAfcBw", 0x13, 0x09, false, true));
+            m_registers.Add(new Register("RegOokPeak", 0x14, 0x28, false, true));
+            m_registers.Add(new Register("RegOokFix", 0x15, 0x0C, false, true));
+            m_registers.Add(new Register("RegOokAvg", 0x16, 0x12, false, true));
+            m_registers.Add(new Register("Reserved17", 0x17, 0x47, false, true));
+            m_registers.Add(new Register("Reserved18", 0x18, 0x32, false, true));
+            m_registers.Add(new Register("Reserved19", 0x19, 0x3E, false, true));
+            m_registers.Add(new Register("RegAfcFei", 0x1A, 0x01, false, true));
+            m_registers.Add(new Register("RegAfcMsb", 0x1B, 0x00, false, true));
+            m_registers.Add(new Register("RegAfcLsb", 0x1C, 0x4d, false, true));
+            m_registers.Add(new Register("RegFeiMsb", 0x1D, 0x00, false, true));
+            m_registers.Add(new Register("RegFeiLsb", 0x1E, 0x03, false, true));
+            m_registers.Add(new Register("RegPreambleDetect", 0x1F, 0xAA, false, true));
+            m_registers.Add(new Register("RegRxTimeout1", 0x20, 0xF0, false, true));
+            m_registers.Add(new Register("RegRxTimeout2", 0x21, 0x9C, false, true));
+            m_registers.Add(new Register("RegRxTimeout3", 0x22, 0xF0, false, true));
+            m_registers.Add(new Register("RegRxDelay", 0x23, 0xC0, false, true));
+            m_registers.Add(new Register("RegOsc", 0x24, 0x07, false, true));
+            m_registers.Add(new Register("RegPreambleMsb", 0x25, 0x00, false, true));
+            m_registers.Add(new Register("RegPreambleLsb", 0x26, 0x04, false, true));
+            m_registers.Add(new Register("RegSyncConfig", 0x27, 0x93, false, true));
+            m_registers.Add(new Register("RegSyncValue1", 0x28, 0xD3, false, true));
+            m_registers.Add(new Register("RegSyncValue2", 0x29, 0x93, false, true));
+            m_registers.Add(new Register("RegSyncValue3", 0x2A, 0xD3, false, true));
+            m_registers.Add(new Register("RegSyncValue4", 0x2B, 0x91, false, true));
+            m_registers.Add(new Register("RegSyncValue5", 0x2C, 0x01, false, true));
+            m_registers.Add(new Register("RegSyncValue6", 0x2D, 0x01, false, true));
+            m_registers.Add(new Register("RegSyncValue7", 0x2E, 0x01, false, true));
+            m_registers.Add(new Register("RegSyncValue8", 0x2F, 0x01, false, true));
+            m_registers.Add(new Register("RegPacketConfig1", 0x30, 0x11, false, true));
+            m_registers.Add(new Register("RegPacketConfig2", 0x31, 0x40, false, true));
+            m_registers.Add(new Register("RegPayloadLength", 0x32, 0x08, false, true));
+            m_registers.Add(new Register("RegNodeAdrs", 0x33, 0x00, false, true));
+            m_registers.Add(new Register("RegBroadcastAdrs", 0x34, 0x00, false, true));
+            m_registers.Add(new Register("RegFifoThresh", 0x35, 0x80, false, true));
+            m_registers.Add(new Register("RegSeqConfig1", 0x36, 0x36, false, true));
+            m_registers.Add(new Register("RegSeqConfig2", 0x37, 0x70, false, true));
+            m_registers.Add(new Register("RegTimerResol", 0x38, 0x0B, false, true));
+            m_registers.Add(new Register("RegTimer1Coef", 0x39, 0x7A, false, true));
+            m_registers.Add(new Register("RegTimer2Coef", 0x3A, 0x86, false, true));
+            m_registers.Add(new Register("RegImageCal", 0x3B, 0x02, false, true));
+            m_registers.Add(new Register("RegTemp", 0x3C, 0xF6, false, true));
+            m_registers.Add(new Register("RegLowBat", 0x3D, 0x02, false, true));
+            m_registers.Add(new Register("RegIrqFlags1", 0x3E, 0x00, false, true));
+            m_registers.Add(new Register("RegIrqFlags2", 0x3F, 0x40, false, true));
+            m_registers.Add(new Register("RegDioMapping1", 0x40, 0x00, false, true));
+            m_registers.Add(new Register("RegDioMapping2", 0x41, 0x01, false, true));
+            m_registers.Add(new Register("RegVersion", 0x42, 0x22, false, true));
+            m_registers.Add(new Register("RegAgcRef", 0x43, 0x13, false, true));
+            m_registers.Add(new Register("RegAgcThresh1", 0x44, 0x0E, false, true));
+            m_registers.Add(new Register("RegAgcThresh2", 0x45, 0x5B, false, true));
+            m_registers.Add(new Register("RegAgcThresh3", 0x46, 0xDB, false, true));
+            m_registers.Add(new Register("RegPllHop", 0x4B, 0x2E, false, true));
+            m_registers.Add(new Register("RegTcxo", 0x58, 0x19, false, true));
+            m_registers.Add(new Register("RegPaDac", 0x5A, 0x84, false, true));
+            m_registers.Add(new Register("RegPll", 0x5C, 0xD0, false, true));
+            m_registers.Add(new Register("RegPllLowPn", 0x5E, 0xD0, false, true));
+            m_registers.Add(new Register("RegFormerTemp", 0x6C, 0xF7, false, true));
+            m_registers.Add(new Register("RegBitRateFrac", 0x70, 0x05, false, true));
 
 			foreach (Register item in m_registers)
 				item.PropertyChanged += new PropertyChangedEventHandler(registers_PropertyChanged);
@@ -2569,8 +2542,8 @@ namespace SemtechLib.Devices.SX1231
 			try
 			{
 				byte data = (byte)m_registers["RegOpMode"].Value;
-				data = (byte)(data & 0xe3);
-				data = (byte)(data | ((byte)(((byte)value) << 2)));
+				data = (byte)(data & 0xF8);
+				data = (byte)(data | ((byte)value));
 				if (!isQuiet)
 				{
 					m_registers["RegOpMode"].Value = data;
@@ -5241,5 +5214,6 @@ namespace SemtechLib.Devices.SX1231
 				}
 			}
 		}
-	}
+
+    }
 }

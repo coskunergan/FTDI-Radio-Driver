@@ -8,6 +8,7 @@
         Stdby,
         Fs,
         Tx,
+        FsRx,
         Rx
     }
 }
