@@ -18,7 +18,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Threading;
 using SemtechLib.Devices.SX1231.Enumerations;
-
+using System.Runtime.InteropServices;
 
 
 namespace SX1231SKB
@@ -126,6 +126,7 @@ namespace SX1231SKB
         private Button b_RefreshList;
         private OpenFileDialog openFileDialog1;
         private Button button1;
+        private Button button2;
 		private ToolStripMenuItem usersGuideToolStripMenuItem;
 		#endregion
 
@@ -352,6 +353,7 @@ namespace SX1231SKB
             this.tsBtnMonitorOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button2 = new System.Windows.Forms.Button();
             this.ssMainStatus.SuspendLayout();
             this.msMainMenu.SuspendLayout();
             this.tsMainToolbar.SuspendLayout();
@@ -793,6 +795,7 @@ namespace SX1231SKB
             // 
             // gr_Config
             // 
+            this.gr_Config.Controls.Add(this.button2);
             this.gr_Config.Controls.Add(this.button1);
             this.gr_Config.Controls.Add(this.b_RefreshList);
             this.gr_Config.Controls.Add(this.label2);
@@ -1124,6 +1127,16 @@ namespace SX1231SKB
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(299, 34);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "AK311";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // MainForm
             // 
@@ -2047,6 +2060,8 @@ namespace SX1231SKB
         byte[] BinFile = new byte[512000];
         long File_Size;
         byte[] Crc_Buff = new byte[4];
+        [DllImport("msvcrt.dll", CallingConvention=CallingConvention.Cdecl)]
+        static extern int memcmp(byte[] b1, byte[] b2, long count);
         /*********************************************************/
         /*********************************************************/
         /*********************************************************/
@@ -2224,6 +2239,42 @@ namespace SX1231SKB
                 sx1231.SetPacketHandlerStartStop(true);
 
             Console.Text += Timestamp_String() + "Tx Done.\n";
+        }
+        static bool ByteArrayCompare(byte[] b1, byte[] b2)
+        {
+            // Validate buffers are the same length.
+            // This also ensures that the count does not exceed the length of either buffer.  
+            return b1.Length == b2.Length && memcmp(b1, b2, b1.Length) == 0;
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            byte[] buffer = { 0x22, 0x22, 0x22, 0x22, (byte)'B', (byte)'O', (byte)'O', (byte)'T' };
+            byte[] buffer2 = { 0x22, 0x22, 0x22, 0x22, (byte)'B', (byte)'O', (byte)'O', (byte)' ' };
+            SemtechLib.Devices.SX1231.General.Packet MyPacket;
+
+            Console.Text += Timestamp_String() + "Rx Start!\n";
+
+            sx1231.SetMessage(buffer2);
+            sx1231.SetMessageLength(buffer2.Length);
+            sx1231.SetMaxPacketNumber(1);
+
+            sx1231.SetOperatingMode(OperatingModeEnum.Rx);
+            sx1231.Mode = OperatingModeEnum.Rx;
+
+            sx1231.SetPacketHandlerStartStop(true);
+
+            
+            MyPacket = sx1231.Packet;
+
+            while (true)
+            {
+                Thread.Sleep(10);
+                if ((MyPacket.MessageLength == buffer.Length) && (memcmp(MyPacket.Message, buffer, buffer.Length) == 0))
+                {
+                    break;
+                }
+            }
+            Console.Text += Timestamp_String() + "Rx Done.\n";
         }
         /*********************************************************/
         /*********************************************************/
