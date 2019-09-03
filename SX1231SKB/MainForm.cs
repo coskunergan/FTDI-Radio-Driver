@@ -25,167 +25,6 @@ namespace SX1231SKB
 {
 	public class MainForm : Form
 	{
-     	public const byte 	RegOpMode	    	=0x09;
-        public const byte 	RegBitrateMsb		=0x03;
-        public const byte 	RegBitrateLsb		=0x41;
-        public const byte 	RegFdevMsb	    	=0x01;
-        public const byte 	RegFdevLsb	    	=0x38;
-        public const byte 	RegFrfMsb	    	=0xD8;// 866.687 Mhz Boot-0 ch
-        public const byte   RegFrfMid           =0xA0;// 866.687 Mhz Boot-0 ch
-        public const byte   RegFrfLsb           =0x00;// 866.687 Mhz Boot-0 ch
-        public const byte 	RegPaConfig	    	=0x0F;// rf power tek anten;
-        public const byte 	RegPaConfig_PA		=0x80; //5dbm -> 20dbm;
-        public const byte 	RegPaRamp	    	=0x06;
-        public const byte 	RegOcp  	    	=0x37;  //200ma;
-        public const byte 	RegLna	        	=0xA3;
-        public const byte 	RegRxConfig	    	=0xBE;
-        public const byte 	RegRssiConfig		=0x02;
-        public const byte 	RegRssiCollision	=0x0F;
-        public const byte 	RegRssiThresh		=0x10;
-        public const byte 	RegRxBw	        	=0x12;
-        //public const byte 	RegAfcBw		=0x0A;
-        public const byte 	RegAfcBw	    	=0x09;
-        public const byte 	RegOokPeak	    	=0x28;
-        public const byte 	RegOokFix	    	=0x0C;
-        public const byte 	RegOokAvg	    	=0x12;
-        public const byte 	RegRes17	    	=0x47;
-        public const byte 	RegRes18	    	=0x32;
-        public const byte 	RegRes19	    	=0x3E;
-        public const byte 	RegAfcFei	    	=0x01;
-        public const byte 	RegAfcMsb	    	=0x00;
-        public const byte 	RegAfcLsb	    	=0x4D;
-        public const byte 	RegFeiMsb	    	=0x00;
-        public const byte 	RegFeiLsb	    	=0x03;
-        public const byte 	RegPreambleDetect	=0xAA;
-        public const byte 	RegRxTimeout1		=0xF0;
-        public const byte 	RegRxTimeout2		=0x9C; //4E->5ms 2F->3ms  =0x9C->10ms;
-        public const byte 	RegRxTimeout3		=0xF0;
-        public const byte 	RegRxDelay	   		=0xC0;
-        public const byte 	RegOsc	       		=0x07;
-        public const byte 	RegPreambleMsb		=0x00;
-        public const byte 	RegPreambleLsb		=0x04;
-        public const byte 	RegSyncConfig		=0x93;
-        public const byte 	RegSyncValue1		=0xD3;
-        public const byte 	RegSyncValue2		=0x91;
-        public const byte 	RegSyncValue3		=0xD3;
-        public const byte 	RegSyncValue4		=0x91;
-        public const byte 	RegSyncValue5		=0x01;
-        public const byte 	RegSyncValue6		=0x01;
-        public const byte 	RegSyncValue7		=0x01;
-        public const byte 	RegSyncValue8		=0x01;
-        public const byte 	RegPacketConfig1	=0x11;
-        public const byte 	RegPacketConfig2	=0x40;
-        public const byte 	RegPayloadLength1	=0x08;
-        public const byte 	RegPayloadLength2	=0x10;
-        public const byte 	RegNodeAdrs 		=0x00;
-        public const byte 	RegBroadcastAdrs	=0x00;
-        public const byte 	RegFifoThresh		=0x80;
-        public const byte 	RegSeqConfig1		=0x76;// no sequencer
-        public const byte 	RegSeqConfig2		=0x70;
-        public const byte 	RegTimerResol		=0x0B;
-        public const byte 	RegTimer1Coef		=0x7A;
-        public const byte 	RegTimer2Coef		=0x86;
-        public const byte 	RegImageCal 		=0x02;
-        public const byte 	RegTemp	        	=0xF6;
-        public const byte 	RegLowBat	    	=0x02;
-        public const byte 	RegIrqFlags1		=0x00;
-        public const byte 	RegIrqFlags2		=0x40;
-        public const byte 	RegDioMapping1		=0x00;
-        public const byte 	RegDioMapping2		=0x01;
-        public const byte 	RegVersion	    	=0x22;
-        public const byte 	RegAgcRef	    	=0x13;
-        public const byte 	RegAgcThresh1		=0x0E;
-        public const byte 	RegAgcThresh2		=0x5B;
-        public const byte 	RegAgcThresh3		=0xDB;
-        public const byte 	RegPllHop	    	=0x2E;
-        public const byte 	RegTcxo	        	=0x19;
-        public const byte 	RegPaDac	    	=0x84;
-        public const byte 	RegPaDac_PA	    	=0x87;
-        public const byte 	RegPll	        	=0xD0;
-        public const byte 	RegPllLowPn	    	=0xD0;
-        public const byte 	RegFormerTemp		=0xF7;
-        public const byte 	RegBitrateFrac		=0x05;
-        ///// registers const..
-        public const byte 	_RegFifo			=0x00;
-        public const byte 	_RegOpMode			=0x01;
-        public const byte 	_RegBitrateMsb		=0x02;
-        public const byte 	_RegBitrateLsb		=0x03;
-        public const byte 	_RegFdevMsb			=0x04;
-        public const byte 	_RegFdevLsb			=0x05;
-        public const byte 	_RegFrfMsb			=0x06;
-        public const byte 	_RegFrfMid			=0x07;
-        public const byte 	_RegFrfLsb			=0x08;
-        public const byte 	_RegPaConfig		=0x09;
-        public const byte 	_RegPaRamp			=0x0A;
-        public const byte 	_RegOcp				=0x0B;
-        public const byte 	_RegLna				=0x0C;
-        public const byte 	_RegRxConfig		=0x0D;
-        public const byte 	_RegRssiConfig		=0x0E;
-        public const byte 	_RegRssiCollision	=0x0F;
-        public const byte 	_RegRssiThresh		=0x10;
-        public const byte 	_RegRssiValue		=0x11;
-        public const byte 	_RegRxBw			=0x12;
-        public const byte 	_RegAfcBw			=0x13;
-        public const byte 	_RegOokPeak			=0x14;
-        public const byte 	_RegOokFix			=0x15;
-        public const byte 	_RegOokAvg			=0x16;
-        public const byte 	_RegRes17			=0x17;
-        public const byte 	_RegRes18			=0x18;
-        public const byte 	_RegRes19			=0x19;
-        public const byte 	_RegAfcFei			=0x1A;
-        public const byte 	_RegAfcMsb			=0x1B;
-        public const byte 	_RegAfcLsb			=0x1C;
-        public const byte 	_RegFeiMsb			=0x1D;
-        public const byte 	_RegFeiLsb			=0x1E;
-        public const byte   _RegPreambleDetect  =0x1F;
-        public const byte 	_RegRxTimeout1		=0x20;
-        public const byte 	_RegRxTimeout2		=0x21;
-        public const byte 	_RegRxTimeout3		=0x22;
-        public const byte 	_RegRxDelay			=0x23;
-        public const byte 	_RegOsc				=0x24;
-        public const byte 	_RegPreambleMsb		=0x25;
-        public const byte 	_RegPreambleLsb		=0x26;
-        public const byte 	_RegSyncConfig		=0x27;
-        public const byte 	_RegSyncValue1		=0x28;
-        public const byte 	_RegSyncValue2		=0x29;
-        public const byte 	_RegSyncValue3		=0x2A;
-        public const byte 	_RegSyncValue4		=0x2B;
-        public const byte 	_RegSyncValue5		=0x2C;
-        public const byte 	_RegSyncValue6		=0x2D;
-        public const byte 	_RegSyncValue7		=0x2E;
-        public const byte 	_RegSyncValue8		=0x2F;
-        public const byte 	_RegPacketConfig1	=0x30;
-        public const byte 	_RegPacketConfig2	=0x31;
-        public const byte 	_RegPayloadLength	=0x32;
-        public const byte 	_RegNodeAdrs		=0x33;
-        public const byte 	_RegBroadcastAdrs	=0x34;
-        public const byte 	_RegFifoThresh		=0x35;
-        public const byte 	_RegSeqConfig1		=0x36;
-        public const byte 	_RegSeqConfig2		=0x37;
-        public const byte 	_RegTimerResol		=0x38;
-        public const byte 	_RegTimer1Coef		=0x39;
-        public const byte 	_RegTimer2Coef		=0x3A;
-        public const byte 	_RegImageCal		=0x3B;
-        public const byte 	_RegTemp			=0x3C;
-        public const byte 	_RegLowBat			=0x3D;
-        public const byte 	_RegIrqFlags1		=0x3E;
-        public const byte 	_RegIrqFlags2		=0x3F;
-        public const byte 	_RegDioMapping1		=0x40;
-        public const byte 	_RegDioMapping2		=0x41;
-        public const byte 	_RegVersion			=0x42;
-        public const byte 	_RegAgcRef			=0x43;
-        public const byte 	_RegAgcThresh1		=0x44;
-        public const byte 	_RegAgcThresh2		=0x45;
-        public const byte 	_RegAgcThresh3		=0x46;
-        public const byte 	_RegPllHop	   		=0x4B;
-        public const byte 	_RegTcxo			=0x58;
-        public const byte 	_RegTest59			=0x59;
-        public const byte 	_RegPaDac			=0x5A;
-        public const byte 	_RegPll				=0x5C;
-        public const byte 	_RegPllLowPn		=0x5E;
-        public const byte 	_RegFormerTemp		=0x6C;
-        public const byte _RegBitrateFrac       = 0x70;
-
 		private delegate void ConnectedDelegate();
 		private delegate void DisconnectedDelegate();
 		private delegate void ErrorDelegate(byte status, string message);
@@ -482,6 +321,7 @@ namespace SX1231SKB
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.gr_Config = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.b_RefreshList = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cb_MeterType = new System.Windows.Forms.ComboBox();
@@ -512,7 +352,6 @@ namespace SX1231SKB
             this.tsBtnMonitorOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
             this.ssMainStatus.SuspendLayout();
             this.msMainMenu.SuspendLayout();
             this.tsMainToolbar.SuspendLayout();
@@ -973,6 +812,16 @@ namespace SX1231SKB
             this.gr_Config.TabIndex = 26;
             this.gr_Config.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(401, 47);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "AK311";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // b_RefreshList
             // 
             this.b_RefreshList.Location = new System.Drawing.Point(500, 15);
@@ -997,7 +846,7 @@ namespace SX1231SKB
             this.cb_MeterType.FormattingEnabled = true;
             this.cb_MeterType.Location = new System.Drawing.Point(103, 117);
             this.cb_MeterType.Name = "cb_MeterType";
-            this.cb_MeterType.Size = new System.Drawing.Size(121, 21);
+            this.cb_MeterType.Size = new System.Drawing.Size(141, 21);
             this.cb_MeterType.TabIndex = 25;
             // 
             // label3
@@ -1112,7 +961,7 @@ namespace SX1231SKB
             this.b_LoadFile.Name = "b_LoadFile";
             this.b_LoadFile.Size = new System.Drawing.Size(138, 35);
             this.b_LoadFile.TabIndex = 22;
-            this.b_LoadFile.Text = "Load File";
+            this.b_LoadFile.Text = "Load .bin File";
             this.b_LoadFile.UseVisualStyleBackColor = true;
             this.b_LoadFile.Click += new System.EventHandler(this.b_LoadFile_Click);
             // 
@@ -1275,16 +1124,6 @@ namespace SX1231SKB
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(401, 47);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "AK311";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
@@ -2222,7 +2061,7 @@ namespace SX1231SKB
             cb_MeterType.Items.Add("TK_1C_LORA L451");
             cb_MeterType.Items.Add("AK311&411 L151");
             cb_MeterType.Items.Add("AK311 L451");
-            cb_MeterType.SelectedIndex = 1;
+            cb_MeterType.SelectedIndex = 0;
         }
         /*********************************************************/
         private void b_ClearConsole_Click(object sender, EventArgs e)
@@ -2233,83 +2072,7 @@ namespace SX1231SKB
         private void b_init_Click(object sender, EventArgs e)
         {
             Console.Text += Timestamp_String() + "Init Start.\n";
-            sx1231.Reset();/*
-            sx1231.Write(_RegOpMode, RegOpMode);   
-            sx1231.Write(_RegBitrateMsb, RegBitrateMsb);
-            sx1231.Write(_RegBitrateLsb, RegBitrateLsb);
-            sx1231.Write(_RegFdevMsb, RegFdevMsb);
-            sx1231.Write(_RegFdevLsb, RegFdevLsb);
-            sx1231.Write(_RegFrfMsb, RegFrfMsb);		
-            sx1231.Write(_RegFrfMid, RegFrfMid);	
-            sx1231.Write(_RegFrfLsb, RegFrfLsb);	
-            sx1231.Write(_RegPaConfig, RegPaConfig);
-            sx1231.Write(_RegPaRamp, RegPaRamp);
-            sx1231.Write(_RegOcp, RegOcp);
-            sx1231.Write(_RegLna, RegLna);
-            sx1231.Write(_RegRxConfig, RegRxConfig);
-            sx1231.Write(_RegRssiConfig, RegRssiConfig);
-            sx1231.Write(_RegRssiCollision, RegRssiCollision);
-            sx1231.Write(_RegRssiThresh, RegRssiThresh);
-            sx1231.Write(_RegRxBw, RegRxBw);
-            sx1231.Write(_RegAfcBw, RegAfcBw);
-            sx1231.Write(_RegOokPeak, RegOokPeak);
-            sx1231.Write(_RegOokFix, RegOokFix);
-            sx1231.Write(_RegOokAvg, RegOokAvg);
-            sx1231.Write(_RegRes17, RegRes17);
-            sx1231.Write(_RegRes18, RegRes18);
-            sx1231.Write(_RegRes19, RegRes19);
-            sx1231.Write(_RegAfcFei, RegAfcFei);
-            sx1231.Write(_RegAfcMsb, RegAfcMsb);
-            sx1231.Write(_RegAfcLsb, RegAfcLsb);
-            sx1231.Write(_RegFeiMsb, RegFeiMsb);
-            sx1231.Write(_RegFeiLsb, RegFeiLsb);
-            sx1231.Write(_RegPreambleDetect, RegPreambleDetect);
-            sx1231.Write(_RegRxTimeout1, RegRxTimeout1);
-            sx1231.Write(_RegRxTimeout2, RegRxTimeout2);
-            sx1231.Write(_RegRxTimeout3, RegRxTimeout3);
-            sx1231.Write(_RegRxDelay, RegRxDelay);
-            sx1231.Write(_RegOsc, RegOsc);
-            sx1231.Write(_RegPreambleMsb, RegPreambleMsb);
-            sx1231.Write(_RegPreambleLsb, RegPreambleLsb);
-            sx1231.Write(_RegSyncConfig, RegSyncConfig);
-            sx1231.Write(_RegSyncValue1, RegSyncValue1);
-            sx1231.Write(_RegSyncValue2, RegSyncValue2);
-            sx1231.Write(_RegSyncValue3, RegSyncValue3);
-            sx1231.Write(_RegSyncValue4, RegSyncValue4);
-            sx1231.Write(_RegSyncValue5, RegSyncValue5);
-            sx1231.Write(_RegSyncValue6, RegSyncValue6);
-            sx1231.Write(_RegSyncValue7, RegSyncValue7);
-            sx1231.Write(_RegSyncValue8, RegSyncValue8);
-            sx1231.Write(_RegPacketConfig1, RegPacketConfig1);
-            sx1231.Write(_RegPacketConfig2, RegPacketConfig2);
-            sx1231.Write(_RegPayloadLength, RegPayloadLength1);  // 8 byte
-            sx1231.Write(_RegNodeAdrs, RegNodeAdrs);
-            sx1231.Write(_RegBroadcastAdrs, RegBroadcastAdrs);
-            sx1231.Write(_RegFifoThresh, RegFifoThresh);
-            sx1231.Write(_RegSeqConfig1, RegSeqConfig1);
-            sx1231.Write(_RegSeqConfig2, RegSeqConfig2);
-            sx1231.Write(_RegTimerResol, RegTimerResol);
-            sx1231.Write(_RegTimer1Coef, RegTimer1Coef);
-            sx1231.Write(_RegTimer2Coef, RegTimer2Coef);
-            sx1231.Write(_RegImageCal, RegImageCal);
-            sx1231.Write(_RegTemp, RegTemp);
-            sx1231.Write(_RegLowBat, RegLowBat);
-            sx1231.Write(_RegIrqFlags1, RegIrqFlags1);
-            sx1231.Write(_RegIrqFlags2, RegIrqFlags2);
-            sx1231.Write(_RegDioMapping1, RegDioMapping1);
-            sx1231.Write(_RegDioMapping2, RegDioMapping2);
-            sx1231.Write(_RegAgcRef, RegAgcRef);
-            sx1231.Write(_RegAgcThresh1, RegAgcThresh1);
-            sx1231.Write(_RegAgcThresh2, RegAgcThresh2);
-            sx1231.Write(_RegAgcThresh3, RegAgcThresh3);
-            sx1231.Write(_RegPllHop, RegPllHop);
-            sx1231.Write(_RegTcxo, RegTcxo);
-            sx1231.Write(_RegPaDac, RegPaDac);
-            sx1231.Write(_RegPll, RegPll);
-            sx1231.Write(_RegPllLowPn, RegPllLowPn);
-            sx1231.Write(_RegFormerTemp, RegFormerTemp);
-            sx1231.Write(_RegBitrateFrac, RegBitrateFrac);*/
-
+            sx1231.Reset();
             sx1231.WriteRegisters();
             Console.Text += Timestamp_String() + "Init Finish!\n";
         }
@@ -2426,24 +2189,21 @@ namespace SX1231SKB
         {
             tb_MeterNoEnd.Text = tb_MeterNoStart.Text;
         }
-
+        /*********************************************************/
         private void b_test_Click(object sender, EventArgs e)
         {
             byte[] buffer = { 0x88, 0x88, 0x88, 0x00, (byte)'o', (byte)'k', (byte)'e', (byte)'y' };
-           // sx1231.SetModeLeds(OperatingModeEnum.Tx);
 
             Console.Text += Timestamp_String() + "Tx Start!\n";
-            for (int i = 0; i < 50; i++ )
-            {
-                sx1231.WriteFifo(buffer);
 
-                sx1231.Write(_RegOpMode, 0x0B);// TX
-                                
-                Thread.Sleep(10);
-                sx1231.Write(_RegOpMode, 0x08);// sleep
-            }
+            sx1231.SetMessage(buffer);
+            sx1231.SetMessageLength(buffer.Length);
+            sx1231.SetMaxPacketNumber(40);
 
-           // sx1231.SetModeLeds(OperatingModeEnum.Sleep);
+            sx1231.SetOperatingMode(OperatingModeEnum.Tx);
+            sx1231.Mode = OperatingModeEnum.Tx;
+
+            sx1231.SetPacketHandlerStartStop(true);
 
             Console.Text += Timestamp_String() + "Tx Done.\n";
         }
@@ -2452,17 +2212,16 @@ namespace SX1231SKB
         {
             byte[] buffer = { 0x22, 0x22, 0x22, 0x22, (byte)'O', (byte)'K', (byte)'E', (byte)'Y' };
 
+            Console.Text += Timestamp_String() + "Tx Start!\n";     
 
-            Console.Text += Timestamp_String() + "Tx Start!\n";
-            for (int i = 0; i < 50; i++)
-            {
-                sx1231.WriteFifo(buffer);
+                sx1231.SetMessage(buffer);
+                sx1231.SetMessageLength(buffer.Length);
+                sx1231.SetMaxPacketNumber(40);
 
-                sx1231.Write(_RegOpMode, 0x0B);// TX
-                Thread.Sleep(10);
-                sx1231.Write(_RegOpMode, 0x08);// sleep
-            }
+                sx1231.SetOperatingMode(OperatingModeEnum.Tx);
+                sx1231.Mode = OperatingModeEnum.Tx;
 
+                sx1231.SetPacketHandlerStartStop(true);
 
             Console.Text += Timestamp_String() + "Tx Done.\n";
         }

@@ -867,9 +867,9 @@ namespace SemtechLib.Devices.SX1231
             m_registers.Add(new Register("RegOokPeak", 0x14, 0x28, false, true));
             m_registers.Add(new Register("RegOokFix", 0x15, 0x0C, false, true));
             m_registers.Add(new Register("RegOokAvg", 0x16, 0x12, false, true));
-            m_registers.Add(new Register("Reserved17", 0x17, 0x47, false, true));
-            m_registers.Add(new Register("Reserved18", 0x18, 0x32, false, true));
-            m_registers.Add(new Register("Reserved19", 0x19, 0x3E, false, true));
+            m_registers.Add(new Register("RegRes17", 0x17, 0x47, false, true));
+            m_registers.Add(new Register("RegRes18", 0x18, 0x32, false, true));
+            m_registers.Add(new Register("RegRes19", 0x19, 0x3E, false, true));
             m_registers.Add(new Register("RegAfcFei", 0x1A, 0x01, false, true));
             m_registers.Add(new Register("RegAfcMsb", 0x1B, 0x00, false, true));
             m_registers.Add(new Register("RegAfcLsb", 0x1C, 0x4d, false, true));
@@ -915,13 +915,69 @@ namespace SemtechLib.Devices.SX1231
             m_registers.Add(new Register("RegAgcThresh1", 0x44, 0x0E, false, true));
             m_registers.Add(new Register("RegAgcThresh2", 0x45, 0x5B, false, true));
             m_registers.Add(new Register("RegAgcThresh3", 0x46, 0xDB, false, true));
+
+            m_registers.Add(new Register("RegTest47", 0x47, 0x24, false, true));
+            m_registers.Add(new Register("RegTest48", 0x48, 0x0E, false, true));
+            m_registers.Add(new Register("RegTest49", 0x49, 0x81, false, true));
+            m_registers.Add(new Register("RegTest4A", 0x4A, 0x3A, false, true));
+
             m_registers.Add(new Register("RegPllHop", 0x4B, 0x2E, false, true));
+
+            m_registers.Add(new Register("RegTest4C", 0x4C, 0x00, false, true));
+            m_registers.Add(new Register("RegTest4D", 0x4D, 0x03, false, true));
+            m_registers.Add(new Register("RegTest4E", 0x4E, 0xDB, false, true));
+            m_registers.Add(new Register("RegTest4F", 0x4F, 0xDB, false, true));
+
+            m_registers.Add(new Register("RegTest50", 0x50, 0x00, false, true));
+            m_registers.Add(new Register("RegTest51", 0x51, 0x00, false, true));
+            m_registers.Add(new Register("RegTest52", 0x52, 0x04, false, true));
+            m_registers.Add(new Register("RegTest53", 0x53, 0x23, false, true));
+            m_registers.Add(new Register("RegTest54", 0x54, 0x00, false, true));
+            m_registers.Add(new Register("RegTest55", 0x55, 0xB9, false, true));
+            m_registers.Add(new Register("RegTest56", 0x56, 0x3F, false, true));
+            m_registers.Add(new Register("RegTest57", 0x57, 0xEC, false, true));
             m_registers.Add(new Register("RegTcxo", 0x58, 0x19, false, true));
+            m_registers.Add(new Register("RegTest59", 0x59, 0x05, false, true));
             m_registers.Add(new Register("RegPaDac", 0x5A, 0x84, false, true));
+            m_registers.Add(new Register("RegTest5B", 0x5B, 0x0B, false, true));
             m_registers.Add(new Register("RegPll", 0x5C, 0xD0, false, true));
+            m_registers.Add(new Register("RegTest5D", 0x5D, 0x0B, false, true));
             m_registers.Add(new Register("RegPllLowPn", 0x5E, 0xD0, false, true));
-            m_registers.Add(new Register("RegFormerTemp", 0x6C, 0xF7, false, true));
-            m_registers.Add(new Register("RegBitRateFrac", 0x70, 0x05, false, true));
+            m_registers.Add(new Register("RegTest5F", 0x5F, 0x32, false, true));
+
+            m_registers.Add(new Register("RegTest60", 0x60, 0x2B, false, true));
+            m_registers.Add(new Register("RegTest61", 0x61, 0x14, false, true));
+            m_registers.Add(new Register("RegTest62", 0x62, 0x00, false, true));
+            m_registers.Add(new Register("RegTest63", 0x63, 0x00, false, true));
+            m_registers.Add(new Register("RegTest64", 0x64, 0x10, false, true));
+            m_registers.Add(new Register("RegTest65", 0x65, 0x00, false, true));
+            m_registers.Add(new Register("RegTest66", 0x66, 0x00, false, true));
+            m_registers.Add(new Register("RegTest67", 0x67, 0x00, false, true));
+            m_registers.Add(new Register("RegTest68", 0x68, 0x0F, false, true));
+            m_registers.Add(new Register("RegTest69", 0x69, 0xE0, false, true));
+            m_registers.Add(new Register("RegTest6A", 0x6A, 0x00, false, true));
+            m_registers.Add(new Register("RegTest6B", 0x6B, 0x0C, false, true));
+            m_registers.Add(new Register("RegFormerTemp", 0x6C, 0xF0, false, true));
+
+            m_registers.Add(new Register("RegTest6D", 0x6D, 0x10, false, true));
+            m_registers.Add(new Register("RegTest6E", 0x6E, 0x24, false, true));
+            m_registers.Add(new Register("RegTest6F", 0x6F, 0x07, false, true));
+            m_registers.Add(new Register("RegBitrateFrac", 0x70, 0x05, false, true));
+            m_registers.Add(new Register("RegTest71", 0x71, 0x00, false, true));
+            m_registers.Add(new Register("RegTest72", 0x72, 0x00, false, true));
+            m_registers.Add(new Register("RegTest73", 0x73, 0x00, false, true));
+            m_registers.Add(new Register("RegTest74", 0x74, 0x00, false, true));
+            m_registers.Add(new Register("RegTest75", 0x75, 0x00, false, true));
+            m_registers.Add(new Register("RegTest76", 0x76, 0x00, false, true));
+            m_registers.Add(new Register("RegTest77", 0x77, 0x00, false, true));
+            m_registers.Add(new Register("RegTest78", 0x78, 0x00, false, true));
+            m_registers.Add(new Register("RegTest79", 0x79, 0x00, false, true));
+            m_registers.Add(new Register("RegTest7A", 0x7A, 0x00, false, true));
+            m_registers.Add(new Register("RegTest7B", 0x7B, 0x00, false, true));
+            m_registers.Add(new Register("RegTest7C", 0x7C, 0x00, false, true));
+            m_registers.Add(new Register("RegTest7D", 0x7D, 0x00, false, true));
+            m_registers.Add(new Register("RegTest7E", 0x7E, 0x00, false, true));
+            m_registers.Add(new Register("RegTest7F", 0x7F, 0x00, false, true));
 
 			foreach (Register item in m_registers)
 				item.PropertyChanged += new PropertyChangedEventHandler(registers_PropertyChanged);
