@@ -99,15 +99,15 @@ namespace SemtechLib.Devices.SX1231
 		private bool fifoNotEmpty;
 		private bool fifoOverrun;
 		private bool firstTransmit;
-		private bool frameReceived;
-		private bool frameTransmitted;
+        public bool frameReceived;
+        public bool frameTransmitted;
 		private decimal frequencyRf = 915000000M;
 		protected bool frequencyRfCheckDisable;
 		private decimal frequencyStep = (32000000M / ((decimal)Math.Pow(2.0, 19.0)));
 		private decimal frequencyXo = 32000000M;
 		private FtdiDevice ftdi;
 		private bool isOpen;
-		private bool isPacketModeRunning;
+		public bool isPacketModeRunning;
 		private decimal listenCoefIdle = 1004.5M;
 		private decimal listenCoefRx = 131.2M;
 		private ListenCriteriaEnum listenCriteria;

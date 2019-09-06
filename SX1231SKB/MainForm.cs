@@ -32,7 +32,8 @@ namespace SX1231SKB
 		private delegate void SX1231PacketHandlerStartedDelegate(object sender, EventArgs e);
 		private delegate void SX1231PacketHandlerStopedDelegate(object sender, EventArgs e);
 		private delegate void SX1231PacketHandlerTransmittedDelegate(object sender, PacketStatusEventArg e);
-
+        public delegate void PacketHandlerReceivedEventHandler(object sender, PacketStatusEventArg e);
+        public delegate void PacketHandlerTransmittedEventHandler(object sender, PacketStatusEventArg e);
 		#region Private variables
 		private ToolStripMenuItem aboutToolStripMenuItem;
 		private ToolStripMenuItem actionToolStripMenuItem;
@@ -127,6 +128,8 @@ namespace SX1231SKB
         private OpenFileDialog openFileDialog1;
         private Button button1;
         private Button button2;
+        private Button button3;
+        private Button button4;
 		private ToolStripMenuItem usersGuideToolStripMenuItem;
 		#endregion
 
@@ -322,6 +325,8 @@ namespace SX1231SKB
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.gr_Config = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.b_RefreshList = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -353,7 +358,7 @@ namespace SX1231SKB
             this.tsBtnMonitorOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button2 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.ssMainStatus.SuspendLayout();
             this.msMainMenu.SuspendLayout();
             this.tsMainToolbar.SuspendLayout();
@@ -795,6 +800,8 @@ namespace SX1231SKB
             // 
             // gr_Config
             // 
+            this.gr_Config.Controls.Add(this.button4);
+            this.gr_Config.Controls.Add(this.button3);
             this.gr_Config.Controls.Add(this.button2);
             this.gr_Config.Controls.Add(this.button1);
             this.gr_Config.Controls.Add(this.b_RefreshList);
@@ -815,9 +822,29 @@ namespace SX1231SKB
             this.gr_Config.TabIndex = 26;
             this.gr_Config.TabStop = false;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(431, 74);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 30;
+            this.button3.Text = "Rx";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(232, 67);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "AK311";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(401, 47);
+            this.button1.Location = new System.Drawing.Point(328, 57);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 28;
@@ -903,7 +930,7 @@ namespace SX1231SKB
             // 
             // b_init
             // 
-            this.b_init.Location = new System.Drawing.Point(265, 89);
+            this.b_init.Location = new System.Drawing.Point(232, 28);
             this.b_init.Name = "b_init";
             this.b_init.Size = new System.Drawing.Size(75, 23);
             this.b_init.TabIndex = 0;
@@ -913,7 +940,7 @@ namespace SX1231SKB
             // 
             // b_test
             // 
-            this.b_test.Location = new System.Drawing.Point(401, 89);
+            this.b_test.Location = new System.Drawing.Point(328, 98);
             this.b_test.Name = "b_test";
             this.b_test.Size = new System.Drawing.Size(75, 23);
             this.b_test.TabIndex = 1;
@@ -1128,15 +1155,15 @@ namespace SX1231SKB
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // button2
+            // button4
             // 
-            this.button2.Location = new System.Drawing.Point(299, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "AK311";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button4.Location = new System.Drawing.Point(431, 105);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 31;
+            this.button4.Text = "Tx";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // MainForm
             // 
@@ -1391,10 +1418,12 @@ namespace SX1231SKB
 
 				sx1231.Error += new SX1231.ErrorEventHandler(sx1231_Error);
 				sx1231.Connected += new EventHandler(sx1231_Connected);
+                sx1231.Connected += new EventHandler(Device_Connected);
+                sx1231.Disconected += new EventHandler(Device_Disconnected);
 				sx1231.Disconected += new EventHandler(sx1231_Disconected);
 				sx1231.PropertyChanged += new PropertyChangedEventHandler(sx1231_PropertyChanged);
 				sx1231.PacketHandlerStarted += new EventHandler(sx1231_PacketHandlerStarted);
-				sx1231.PacketHandlerStoped += new EventHandler(sx1231_PacketHandlerStoped);
+				sx1231.PacketHandlerStoped += new EventHandler(sx1231_PacketHandlerStoped);     
 
 				//sx1231ViewControl.SX1231 = sx1231;
 				tsBtnOpenDevice_Click(tsBtnOpenDevice, EventArgs.Empty);
@@ -1873,10 +1902,6 @@ namespace SX1231SKB
                     && !sx1231.Open("USB <-> Dual Serial")
                         )
                         throw new Exception("Unable to open SX1231 " + sx1231.DeviceName + " device");
-                    else
-                    {
-                        Device_Connected();// Coskun 
-                    }
 				}
 				else if (sx1231 != null)
 					sx1231.Close();
@@ -2062,10 +2087,19 @@ namespace SX1231SKB
         byte[] Crc_Buff = new byte[4];
         [DllImport("msvcrt.dll", CallingConvention=CallingConvention.Cdecl)]
         static extern int memcmp(byte[] b1, byte[] b2, long count);
+        bool Rx_Packet_Done_Flag=false;
+        bool Tx_Packet_Done_Flag = false;
+        long Tick_Ms = 0;
         /*********************************************************/
         /*********************************************************/
         /*********************************************************/
-        private void Device_Connected()
+        private void Device_Disconnected(object sender, EventArgs e)
+        {
+            gr_Config.Enabled = false;
+            gr_Buttons.Enabled = false;
+            Console.Clear();
+        }
+        private void Device_Connected(object sender, EventArgs e)
         {
             gr_Config.Enabled = true;
             gr_Buttons.Enabled = true;
@@ -2076,7 +2110,10 @@ namespace SX1231SKB
             cb_MeterType.Items.Add("TK_1C_LORA L451");
             cb_MeterType.Items.Add("AK311&411 L151");
             cb_MeterType.Items.Add("AK311 L451");
-            cb_MeterType.SelectedIndex = 0;
+            cb_MeterType.SelectedIndex = 0;            
+
+            sx1231.PacketHandlerTransmitted += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerTransmittedEventHandler(Radio_Transmitted_Done);
+            sx1231.PacketHandlerReceived += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerReceivedEventHandler(Radio_Receive_Done);
         }
         /*********************************************************/
         private void b_ClearConsole_Click(object sender, EventArgs e)
@@ -2240,17 +2277,19 @@ namespace SX1231SKB
 
             Console.Text += Timestamp_String() + "Tx Done.\n";
         }
+        /*********************************************************/
         static bool ByteArrayCompare(byte[] b1, byte[] b2)
         {
             // Validate buffers are the same length.
             // This also ensures that the count does not exceed the length of either buffer.  
             return b1.Length == b2.Length && memcmp(b1, b2, b1.Length) == 0;
         }
+        /*********************************************************/
         private void button2_Click(object sender, EventArgs e)
         {
             byte[] buffer = { 0x22, 0x22, 0x22, 0x22, (byte)'B', (byte)'O', (byte)'O', (byte)'T' };
             byte[] buffer2 = { 0x22, 0x22, 0x22, 0x22, (byte)'B', (byte)'O', (byte)'O', (byte)' ' };
-            SemtechLib.Devices.SX1231.General.Packet MyPacket;
+            SemtechLib.Devices.SX1231.General.Packet MyPacket = sx1231.Packet; 
 
             Console.Text += Timestamp_String() + "Rx Start!\n";
 
@@ -2262,9 +2301,7 @@ namespace SX1231SKB
             sx1231.Mode = OperatingModeEnum.Rx;
 
             sx1231.SetPacketHandlerStartStop(true);
-
-            
-            MyPacket = sx1231.Packet;
+ 
 
             while (true)
             {
@@ -2275,6 +2312,111 @@ namespace SX1231SKB
                 }
             }
             Console.Text += Timestamp_String() + "Rx Done.\n";
+        }
+        /*********************************************************/
+        private void Radio_Receive_Done(object sender, EventArgs e)
+        {
+            Rx_Packet_Done_Flag = true;                
+        }
+        /*********************************************************/
+        private void Radio_Transmitted_Done(object sender, EventArgs e)
+        {
+            Tx_Packet_Done_Flag = true;
+        }
+        /*********************************************************/
+        private bool Radio_Send_Packet(byte[] buffer, int retry, int timeout_ms)
+        {
+            bool status = true;
+            sx1231.SetMessage(buffer);
+            sx1231.SetMessageLength(buffer.Length);
+
+            sx1231.SetMaxPacketNumber(retry);
+
+            sx1231.SetOperatingMode(OperatingModeEnum.Tx);
+            sx1231.Mode = OperatingModeEnum.Tx;
+
+            sx1231.SetPacketHandlerStartStop(true);                      
+
+            DateTime desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
+
+            Tx_Packet_Done_Flag = false;
+
+            while (sx1231.isPacketModeRunning == true)
+            {
+                if (DateTime.Now > desired_time)
+                {
+                    status = false;// timeout
+                    break;
+                }
+                Thread.Sleep(1);
+                System.Windows.Forms.Application.DoEvents();
+            }
+            sx1231.SetOperatingMode(OperatingModeEnum.Stdby);
+            sx1231.Mode = OperatingModeEnum.Stdby;
+            return status;            
+        }
+        /*********************************************************/
+        private bool Radio_Get_Packet(int length, int timeout_ms)
+        {                       
+            byte[] buff_rx = new byte[length];
+            bool status = true;
+            sx1231.SetMessage(buff_rx);
+            sx1231.SetMessageLength(length);
+
+            sx1231.SetMaxPacketNumber(2);
+
+            sx1231.SetOperatingMode(OperatingModeEnum.Rx);
+            sx1231.Mode = OperatingModeEnum.Rx;
+
+            sx1231.SetPacketHandlerStartStop(true);
+            
+            Rx_Packet_Done_Flag = false;
+            DateTime desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
+
+            while (Rx_Packet_Done_Flag == false)
+            {
+                if (DateTime.Now > desired_time)
+                {
+                    status = false;// timeout
+                    break;
+                }
+                Thread.Sleep(1);
+                System.Windows.Forms.Application.DoEvents();
+            }            
+            sx1231.SetOperatingMode(OperatingModeEnum.Stdby);
+            sx1231.Mode = OperatingModeEnum.Stdby;
+            return status;            
+        }
+        /*********************************************************/
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SemtechLib.Devices.SX1231.General.Packet MyPacket = sx1231.Packet;
+
+            if (Radio_Get_Packet(8, 3000))
+            {
+                Console.Text += Timestamp_String() + BitConverter.ToString(MyPacket.Message) + "\r\n";
+            }
+            else
+            {
+                Console.Text += Timestamp_String() + "Timeout Rx\r\n";
+            }           
+        }
+        /*********************************************************/
+        private void button4_Click(object sender, EventArgs e)
+        {
+            byte[] buffer = { 0x22, 0x22, 0x22, 0x22, (byte)'O', (byte)'K', (byte)'E', (byte)'Y' };
+
+            for (int i = 0; i < 100; i++)
+            {
+                if (Radio_Send_Packet(buffer,25, 2000))
+                {
+                    Console.Text += Timestamp_String() + "Tx Done\r\n";
+                }
+                else
+                {
+                    Console.Text += Timestamp_String() + "Timeout Tx\r\n";
+                }
+            }              
         }
         /*********************************************************/
         /*********************************************************/
