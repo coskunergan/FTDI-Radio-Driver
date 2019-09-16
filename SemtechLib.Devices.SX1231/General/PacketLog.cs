@@ -66,12 +66,12 @@
         public void Start()
         {
             try
-            {
+            {/*
                 this.fileStream = new FileStream(this.path + @"\" + this.fileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
                 this.streamWriter = new StreamWriter(this.fileStream, Encoding.ASCII);
                 this.GenerateFileHeader();
                 this.samples = 0L;
-                this.state = true;
+                this.state = true;*/
             }
             catch (Exception exception)
             {
@@ -220,7 +220,7 @@
                     this.sx1231.PacketHandlerStarted += new EventHandler(this.sx1231_PacketHandlerStarted);
                     this.sx1231.PacketHandlerStoped += new EventHandler(this.sx1231_PacketHandlerStoped);
                     this.sx1231.PacketHandlerTransmitted += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerTransmittedEventHandler(this.sx1231_PacketHandlerTransmitted);
-                    this.sx1231.PacketHandlerReceived += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerReceivedEventHandler(this.sx1231_PacketHandlerReceived);
+                    //this.sx1231.PacketHandlerReceived += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerReceivedEventHandler(this.sx1231_PacketHandlerReceived);
                 }
             }
         }

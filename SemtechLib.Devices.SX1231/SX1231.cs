@@ -3128,7 +3128,7 @@ namespace SemtechLib.Devices.SX1231
 			try
 			{
 				SetOperatingMode(OperatingModeEnum.Sleep, true);
-				Thread.Sleep(60);
+				//Thread.Sleep(5);
 				flag = WriteFifo(buffer);
 				SetOperatingMode(OperatingModeEnum.Tx, true);
 			}

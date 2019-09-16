@@ -36,6 +36,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="FTD2XX_NET, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />

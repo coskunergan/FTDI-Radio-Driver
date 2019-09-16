@@ -3602,7 +3602,7 @@ namespace SemtechLib.Devices.SX1231.Controls
                     sx1231.PacketHandlerStarted += new EventHandler(sx1231_PacketHandlerStarted);
                     sx1231.PacketHandlerStoped += new EventHandler(sx1231_PacketHandlerStoped);
                     sx1231.PacketHandlerTransmitted += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerTransmittedEventHandler(sx1231_PacketHandlerTransmitted);
-                    sx1231.PacketHandlerReceived += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerReceivedEventHandler(sx1231_PacketHandlerReceived);
+                    //sx1231.PacketHandlerReceived += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerReceivedEventHandler(sx1231_PacketHandlerReceived);
                     commonViewControl1.FrequencyXo = sx1231.FrequencyXo;
                     commonViewControl1.FrequencyStep = sx1231.FrequencyStep;
                     commonViewControl1.Sequencer = sx1231.Sequencer;

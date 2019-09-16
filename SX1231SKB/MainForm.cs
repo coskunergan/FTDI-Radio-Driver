@@ -1,4 +1,5 @@
-﻿using SemtechLib.Controls;
+﻿using FTD2XX_NET;
+using SemtechLib.Controls;
 using SemtechLib.Devices.SX1231;
 using SemtechLib.Devices.SX1231.Controls;
 using SemtechLib.Devices.SX1231.Events;
@@ -19,6 +20,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using SemtechLib.Devices.SX1231.Enumerations;
 using System.Runtime.InteropServices;
+using SemtechLib.Ftdi;
 
 
 namespace SX1231SKB
@@ -101,8 +103,6 @@ namespace SX1231SKB
 		private ToolStripStatusLabel tsLblSeparator2;
 		private ToolStripStatusLabel tsLblStatus;
         private ToolStripEx tsMainToolbar;
-        private Button b_test;
-        private Button b_init;
         private RichTextBox Console;
         private Button b_ClearConsole;
         private Button b_Start;
@@ -116,20 +116,17 @@ namespace SX1231SKB
         private GroupBox gr_Config;
         private ComboBox cb_MeterType;
         private Label label3;
-        private Label label5;
-        private RichTextBox richTextBox2;
-        private Label label4;
-        private RichTextBox richTextBox1;
+        private Label lb_WaitTotal;
+        private RichTextBox tb_WaitList;
+        private Label lb_FinishTotal;
+        private RichTextBox tb_FinishList;
         private Label label2;
         private Label label6;
         private Label label7;
-        private Button b_Pause;
-        private Button b_RefreshList;
         private OpenFileDialog openFileDialog1;
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
+        private CheckBox checkBox1;
+        private Label lb_percent;
+        private ProgressBar pr_transmid;
 		private ToolStripMenuItem usersGuideToolStripMenuItem;
 		#endregion
 
@@ -320,15 +317,11 @@ namespace SX1231SKB
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.lb_WaitTotal = new System.Windows.Forms.Label();
+            this.tb_WaitList = new System.Windows.Forms.RichTextBox();
+            this.lb_FinishTotal = new System.Windows.Forms.Label();
+            this.tb_FinishList = new System.Windows.Forms.RichTextBox();
             this.gr_Config = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.b_RefreshList = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cb_MeterType = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -336,11 +329,8 @@ namespace SX1231SKB
             this.tb_MeterNoStart = new System.Windows.Forms.TextBox();
             this.b_ClearConsole = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.b_init = new System.Windows.Forms.Button();
-            this.b_test = new System.Windows.Forms.Button();
             this.tb_MeterNoEnd = new System.Windows.Forms.TextBox();
             this.gr_Buttons = new System.Windows.Forms.GroupBox();
-            this.b_Pause = new System.Windows.Forms.Button();
             this.b_LoadFile = new System.Windows.Forms.Button();
             this.b_Stop = new System.Windows.Forms.Button();
             this.b_Start = new System.Windows.Forms.Button();
@@ -358,7 +348,9 @@ namespace SX1231SKB
             this.tsBtnMonitorOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button4 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.lb_percent = new System.Windows.Forms.Label();
+            this.pr_transmid = new System.Windows.Forms.ProgressBar();
             this.ssMainStatus.SuspendLayout();
             this.msMainMenu.SuspendLayout();
             this.tsMainToolbar.SuspendLayout();
@@ -712,10 +704,10 @@ namespace SX1231SKB
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.label7);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.label6);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.label5);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.richTextBox2);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.label4);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.richTextBox1);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.lb_WaitTotal);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.tb_WaitList);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.lb_FinishTotal);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.tb_FinishList);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.gr_Config);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.gr_Buttons);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.Console);
@@ -757,54 +749,60 @@ namespace SX1231SKB
             this.label6.TabIndex = 27;
             this.label6.Text = "Wait List";
             // 
-            // label5
+            // lb_WaitTotal
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label5.Location = new System.Drawing.Point(807, 495);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 16);
-            this.label5.TabIndex = 29;
-            this.label5.Text = "Total: 0";
+            this.lb_WaitTotal.AutoSize = true;
+            this.lb_WaitTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lb_WaitTotal.Location = new System.Drawing.Point(807, 495);
+            this.lb_WaitTotal.Name = "lb_WaitTotal";
+            this.lb_WaitTotal.Size = new System.Drawing.Size(60, 16);
+            this.lb_WaitTotal.TabIndex = 29;
+            this.lb_WaitTotal.Text = "Total: 0";
             // 
-            // richTextBox2
+            // tb_WaitList
             // 
-            this.richTextBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.richTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.richTextBox2.Location = new System.Drawing.Point(782, 22);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.ReadOnly = true;
-            this.richTextBox2.Size = new System.Drawing.Size(104, 470);
-            this.richTextBox2.TabIndex = 28;
-            this.richTextBox2.Text = "";
+            this.tb_WaitList.AcceptsTab = true;
+            this.tb_WaitList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_WaitList.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tb_WaitList.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tb_WaitList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tb_WaitList.Location = new System.Drawing.Point(782, 22);
+            this.tb_WaitList.Name = "tb_WaitList";
+            this.tb_WaitList.ReadOnly = true;
+            this.tb_WaitList.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tb_WaitList.Size = new System.Drawing.Size(104, 470);
+            this.tb_WaitList.TabIndex = 28;
+            this.tb_WaitList.Text = "";
             // 
-            // label4
+            // lb_FinishTotal
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(915, 495);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 16);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Total: 0";
+            this.lb_FinishTotal.AutoSize = true;
+            this.lb_FinishTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lb_FinishTotal.Location = new System.Drawing.Point(915, 495);
+            this.lb_FinishTotal.Name = "lb_FinishTotal";
+            this.lb_FinishTotal.Size = new System.Drawing.Size(60, 16);
+            this.lb_FinishTotal.TabIndex = 26;
+            this.lb_FinishTotal.Text = "Total: 0";
             // 
-            // richTextBox1
+            // tb_FinishList
             // 
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.richTextBox1.Location = new System.Drawing.Point(892, 22);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(104, 470);
-            this.richTextBox1.TabIndex = 27;
-            this.richTextBox1.Text = "";
+            this.tb_FinishList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_FinishList.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.tb_FinishList.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tb_FinishList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tb_FinishList.Location = new System.Drawing.Point(892, 22);
+            this.tb_FinishList.Name = "tb_FinishList";
+            this.tb_FinishList.ReadOnly = true;
+            this.tb_FinishList.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tb_FinishList.Size = new System.Drawing.Size(104, 470);
+            this.tb_FinishList.TabIndex = 27;
+            this.tb_FinishList.Text = "";
             // 
             // gr_Config
             // 
-            this.gr_Config.Controls.Add(this.button4);
-            this.gr_Config.Controls.Add(this.button3);
-            this.gr_Config.Controls.Add(this.button2);
-            this.gr_Config.Controls.Add(this.button1);
-            this.gr_Config.Controls.Add(this.b_RefreshList);
+            this.gr_Config.Controls.Add(this.pr_transmid);
+            this.gr_Config.Controls.Add(this.lb_percent);
+            this.gr_Config.Controls.Add(this.checkBox1);
             this.gr_Config.Controls.Add(this.label2);
             this.gr_Config.Controls.Add(this.cb_MeterType);
             this.gr_Config.Controls.Add(this.label3);
@@ -812,8 +810,6 @@ namespace SX1231SKB
             this.gr_Config.Controls.Add(this.tb_MeterNoStart);
             this.gr_Config.Controls.Add(this.b_ClearConsole);
             this.gr_Config.Controls.Add(this.label1);
-            this.gr_Config.Controls.Add(this.b_init);
-            this.gr_Config.Controls.Add(this.b_test);
             this.gr_Config.Controls.Add(this.tb_MeterNoEnd);
             this.gr_Config.Enabled = false;
             this.gr_Config.Location = new System.Drawing.Point(180, 3);
@@ -821,45 +817,6 @@ namespace SX1231SKB
             this.gr_Config.Size = new System.Drawing.Size(596, 184);
             this.gr_Config.TabIndex = 26;
             this.gr_Config.TabStop = false;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(431, 74);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 30;
-            this.button3.Text = "Rx";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(232, 67);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "AK311";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(328, 57);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "AK311";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // b_RefreshList
-            // 
-            this.b_RefreshList.Location = new System.Drawing.Point(500, 15);
-            this.b_RefreshList.Name = "b_RefreshList";
-            this.b_RefreshList.Size = new System.Drawing.Size(90, 27);
-            this.b_RefreshList.TabIndex = 27;
-            this.b_RefreshList.Text = "Refresh List";
-            this.b_RefreshList.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -893,7 +850,7 @@ namespace SX1231SKB
             // 
             this.pr_Load.Location = new System.Drawing.Point(6, 151);
             this.pr_Load.Name = "pr_Load";
-            this.pr_Load.Size = new System.Drawing.Size(488, 27);
+            this.pr_Load.Size = new System.Drawing.Size(442, 27);
             this.pr_Load.TabIndex = 18;
             // 
             // tb_MeterNoStart
@@ -910,11 +867,12 @@ namespace SX1231SKB
             // 
             // b_ClearConsole
             // 
+            this.b_ClearConsole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.b_ClearConsole.Location = new System.Drawing.Point(500, 151);
             this.b_ClearConsole.Name = "b_ClearConsole";
             this.b_ClearConsole.Size = new System.Drawing.Size(90, 27);
             this.b_ClearConsole.TabIndex = 3;
-            this.b_ClearConsole.Text = "Clear Console";
+            this.b_ClearConsole.Text = "Clear";
             this.b_ClearConsole.UseVisualStyleBackColor = true;
             this.b_ClearConsole.Click += new System.EventHandler(this.b_ClearConsole_Click);
             // 
@@ -928,26 +886,6 @@ namespace SX1231SKB
             this.label1.TabIndex = 17;
             this.label1.Text = "Meter No Start:";
             // 
-            // b_init
-            // 
-            this.b_init.Location = new System.Drawing.Point(232, 28);
-            this.b_init.Name = "b_init";
-            this.b_init.Size = new System.Drawing.Size(75, 23);
-            this.b_init.TabIndex = 0;
-            this.b_init.Text = "init";
-            this.b_init.UseVisualStyleBackColor = true;
-            this.b_init.Click += new System.EventHandler(this.b_init_Click);
-            // 
-            // b_test
-            // 
-            this.b_test.Location = new System.Drawing.Point(328, 98);
-            this.b_test.Name = "b_test";
-            this.b_test.Size = new System.Drawing.Size(75, 23);
-            this.b_test.TabIndex = 1;
-            this.b_test.Text = "AMR";
-            this.b_test.UseVisualStyleBackColor = true;
-            this.b_test.Click += new System.EventHandler(this.b_test_Click);
-            // 
             // tb_MeterNoEnd
             // 
             this.tb_MeterNoEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -957,11 +895,10 @@ namespace SX1231SKB
             this.tb_MeterNoEnd.Name = "tb_MeterNoEnd";
             this.tb_MeterNoEnd.Size = new System.Drawing.Size(92, 28);
             this.tb_MeterNoEnd.TabIndex = 20;
-            this.tb_MeterNoEnd.Text = "00888888";
+            this.tb_MeterNoEnd.TextChanged += new System.EventHandler(this.tb_MeterNoEnd_TextChanged);
             // 
             // gr_Buttons
             // 
-            this.gr_Buttons.Controls.Add(this.b_Pause);
             this.gr_Buttons.Controls.Add(this.b_LoadFile);
             this.gr_Buttons.Controls.Add(this.b_Stop);
             this.gr_Buttons.Controls.Add(this.b_Start);
@@ -971,18 +908,6 @@ namespace SX1231SKB
             this.gr_Buttons.Size = new System.Drawing.Size(162, 184);
             this.gr_Buttons.TabIndex = 24;
             this.gr_Buttons.TabStop = false;
-            // 
-            // b_Pause
-            // 
-            this.b_Pause.Enabled = false;
-            this.b_Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.b_Pause.Location = new System.Drawing.Point(13, 98);
-            this.b_Pause.Name = "b_Pause";
-            this.b_Pause.Size = new System.Drawing.Size(138, 35);
-            this.b_Pause.TabIndex = 24;
-            this.b_Pause.Text = "Pause";
-            this.b_Pause.UseVisualStyleBackColor = true;
-            this.b_Pause.Click += new System.EventHandler(this.b_Pause_Click);
             // 
             // b_LoadFile
             // 
@@ -999,9 +924,9 @@ namespace SX1231SKB
             // 
             this.b_Stop.Enabled = false;
             this.b_Stop.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.b_Stop.Location = new System.Drawing.Point(13, 139);
+            this.b_Stop.Location = new System.Drawing.Point(13, 117);
             this.b_Stop.Name = "b_Stop";
-            this.b_Stop.Size = new System.Drawing.Size(138, 35);
+            this.b_Stop.Size = new System.Drawing.Size(138, 57);
             this.b_Stop.TabIndex = 23;
             this.b_Stop.Text = "Stop";
             this.b_Stop.UseVisualStyleBackColor = true;
@@ -1013,7 +938,7 @@ namespace SX1231SKB
             this.b_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.b_Start.Location = new System.Drawing.Point(13, 57);
             this.b_Start.Name = "b_Start";
-            this.b_Start.Size = new System.Drawing.Size(138, 35);
+            this.b_Start.Size = new System.Drawing.Size(138, 54);
             this.b_Start.TabIndex = 19;
             this.b_Start.Text = "Start";
             this.b_Start.UseVisualStyleBackColor = true;
@@ -1026,6 +951,7 @@ namespace SX1231SKB
             this.Console.ForeColor = System.Drawing.Color.LawnGreen;
             this.Console.Location = new System.Drawing.Point(12, 193);
             this.Console.Name = "Console";
+            this.Console.ReadOnly = true;
             this.Console.Size = new System.Drawing.Size(764, 318);
             this.Console.TabIndex = 5;
             this.Console.Text = "";
@@ -1155,15 +1081,32 @@ namespace SX1231SKB
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // button4
+            // checkBox1
             // 
-            this.button4.Location = new System.Drawing.Point(431, 105);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 31;
-            this.button4.Text = "Tx";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(236, 34);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(98, 17);
+            this.checkBox1.TabIndex = 27;
+            this.checkBox1.Text = "Continue Mode";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // lb_percent
+            // 
+            this.lb_percent.AutoSize = true;
+            this.lb_percent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lb_percent.Location = new System.Drawing.Point(454, 157);
+            this.lb_percent.Name = "lb_percent";
+            this.lb_percent.Size = new System.Drawing.Size(33, 16);
+            this.lb_percent.TabIndex = 28;
+            this.lb_percent.Text = "% 0";
+            // 
+            // pr_transmid
+            // 
+            this.pr_transmid.Location = new System.Drawing.Point(348, 134);
+            this.pr_transmid.Name = "pr_transmid";
+            this.pr_transmid.Size = new System.Drawing.Size(100, 11);
+            this.pr_transmid.TabIndex = 29;
             // 
             // MainForm
             // 
@@ -2083,13 +2026,22 @@ namespace SX1231SKB
         /////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////
         byte[] BinFile = new byte[512000];
-        long File_Size;
+        long FileSize;
+        int PacketIndex = 0;
+        long FileIndex = 0;
         byte[] Crc_Buff = new byte[4];
         [DllImport("msvcrt.dll", CallingConvention=CallingConvention.Cdecl)]
         static extern int memcmp(byte[] b1, byte[] b2, long count);
         bool Rx_Packet_Done_Flag=false;
         bool Tx_Packet_Done_Flag = false;
-        long Tick_Ms = 0;
+        byte[] Meter_No_Buffer = new byte[4];
+        int[] MeterList = new int[1000];
+        int MeterListSize;
+        int MeterNoStartInt;
+        int MeterNoEndInt;
+        int FinishTotal=0;
+        int WaitTotal = 0;
+        int Procces_MeterIndex;
         /*********************************************************/
         /*********************************************************/
         /*********************************************************/
@@ -2108,25 +2060,19 @@ namespace SX1231SKB
             cb_MeterType.Items.Add("TK_AMR_LORA L151");
             cb_MeterType.Items.Add("TK_1C_LORA L151");
             cb_MeterType.Items.Add("TK_1C_LORA L451");
-            cb_MeterType.Items.Add("AK311&411 L151");
+            cb_MeterType.Items.Add("AK311 AK411 L151");
             cb_MeterType.Items.Add("AK311 L451");
-            cb_MeterType.SelectedIndex = 0;            
-
-            sx1231.PacketHandlerTransmitted += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerTransmittedEventHandler(Radio_Transmitted_Done);
+            cb_MeterType.SelectedIndex = 0;
+            pr_transmid.Maximum = 20;            
+            sx1231.PacketHandlerTransmitted+= new SemtechLib.Devices.SX1231.SX1231.PacketHandlerTransmittedEventHandler(Radio_Transmit_Done);
             sx1231.PacketHandlerReceived += new SemtechLib.Devices.SX1231.SX1231.PacketHandlerReceivedEventHandler(Radio_Receive_Done);
+
+             tb_MeterNoStart_TextChanged(null, null);
         }
         /*********************************************************/
         private void b_ClearConsole_Click(object sender, EventArgs e)
         {
             Console.Clear();
-        }
-        /*********************************************************/
-        private void b_init_Click(object sender, EventArgs e)
-        {
-            Console.Text += Timestamp_String() + "Init Start.\n";
-            sx1231.Reset();
-            sx1231.WriteRegisters();
-            Console.Text += Timestamp_String() + "Init Finish!\n";
         }
         /*********************************************************/
         private void b_LoadFile_Click(object sender, EventArgs e)
@@ -2145,13 +2091,13 @@ namespace SX1231SKB
                 FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read);
                 BinaryReader r = new BinaryReader(fs);
                 r.Read(BinFile, 0, 512000);
-                File_Size = (long)fs.Length;
+                FileSize = (long)fs.Length;
                 r.Close();
 
-                pr_Load.Maximum = (int)((File_Size + 200) / 100);
-                Console.Text += "Length: ";
-                Console.Text += File_Size.ToString();
-                Console.Text += " Byte\n";
+                Console.Text += "(";
+                pr_Load.Maximum = (int)((FileSize + 200) / 100);                
+                Console.Text += FileSize.ToString();
+                Console.Text += " Byte) ";
 
                 Crc32 crc32 = new Crc32();
                 String hash = String.Empty;
@@ -2209,119 +2155,299 @@ namespace SX1231SKB
             return str;
         }
         /*********************************************************/
+        private int Convert_ToDec(byte[] buff)
+        {
+            int value;
+            value = buff[0]&0xF;
+            value += (buff[0]>>4)*10;
+            value += (buff[1]&0xF) *100;
+            value += (buff[1] >> 4) * 1000;
+            value += (buff[2]&0xF) *10000;
+            value += (buff[2] >> 4) * 100000;
+            value += (buff[3]&0xF)*1000000;
+            value += (buff[3] >> 4) * 10000000;
+            return value;
+        }
+        /*********************************************************/
+        private int Convert_ToDecSwap(byte[] buff)
+        {
+            int value;
+            value = buff[3] & 0xF;
+            value += (buff[3] >> 4) * 10;
+            value += (buff[2] & 0xF) * 100;
+            value += (buff[2] >> 4) * 1000;
+            value += (buff[1] & 0xF) * 10000;
+            value += (buff[1] >> 4) * 100000;
+            value += (buff[0] & 0xF) * 1000000;
+            value += (buff[0] >> 4) * 10000000;
+            return value;
+        }
+        /*********************************************************/
+        private void Convert_ToBCDByteArray(int value, ref byte[] buff)
+        {
+            buff[0] = (byte)(value % 10);
+            buff[0] += (byte)(((value / 10) % 10) << 4);
+            buff[1] = (byte)((value / 100) % 10);
+            buff[1] += (byte)(((value / 1000) % 10) << 4);
+            buff[2] = (byte)((value / 10000) % 10);
+            buff[2] += (byte)(((value / 100000) % 10) << 4);
+            buff[3] = (byte)((value / 1000000) % 10);
+            buff[3] += (byte)(((value / 10000000) % 10) << 4);
+        }
+        /*********************************************************/
         private void b_Start_Click(object sender, EventArgs e)
         {
+            byte[] Handshake_Packet = new byte[8];
+            byte[] Wait_Packet = new byte[8];  
+
             b_Stop.Enabled = true;
-            b_Pause.Enabled = true;
             b_LoadFile.Enabled = false;
             b_Start.Enabled = false;
             gr_Config.Enabled = false;
-            Console.Text += Timestamp_String() + "Start.\n";
-        }
-        /*********************************************************/
-        private void b_Pause_Click(object sender, EventArgs e)
-        {
-            b_Start.Enabled = true;
-            b_Pause.Enabled = false;
-            gr_Config.Enabled = true;
-            Console.Text += Timestamp_String() + "Pause!\n";
+
+            Console.Text += Timestamp_String() + "Start. Waiting Meter.\n";
+
+            tb_MeterNoEnd_TextChanged(null, null);
+
+            if (cb_MeterType.SelectedIndex == 0) // TK_AMR_LORA L451
+            {
+                Wait_Packet[4] = (byte)'b';
+                Wait_Packet[5] = (byte)'o';
+                Wait_Packet[6] = (byte)'o';
+                Wait_Packet[7] = (byte)'t';
+                Handshake_Packet[4] = (byte)'o';
+                Handshake_Packet[5] = (byte)'k';
+                Handshake_Packet[6] = (byte)'e';
+                Handshake_Packet[7] = (byte)'y';
+            }
+            if (cb_MeterType.SelectedIndex == 1) // TK_AMR_LORA L151
+            {
+                Wait_Packet[4] = (byte)'B';
+                Wait_Packet[5] = (byte)'O';
+                Wait_Packet[6] = (byte)'O';
+                Wait_Packet[7] = (byte)'T';
+                Handshake_Packet[4] = (byte)'O';
+                Handshake_Packet[5] = (byte)'K';
+                Handshake_Packet[6] = (byte)'E';
+                Handshake_Packet[7] = (byte)'Y';
+            }
+            if (cb_MeterType.SelectedIndex == 2) // TK_1C_LORA L151
+            {
+                Wait_Packet[4] = (byte)'B';
+                Wait_Packet[5] = (byte)'O';
+                Wait_Packet[6] = (byte)'O';
+                Wait_Packet[7] = (byte)'T';
+                Handshake_Packet[4] = (byte)'O';
+                Handshake_Packet[5] = (byte)'K';
+                Handshake_Packet[6] = (byte)'E';
+                Handshake_Packet[7] = (byte)'Y';
+            }
+            if (cb_MeterType.SelectedIndex == 3) // TK_1C_LORA L451
+            {
+                Wait_Packet[4] = (byte)'b';
+                Wait_Packet[5] = (byte)'o';
+                Wait_Packet[6] = (byte)'o';
+                Wait_Packet[7] = (byte)'t';
+                Handshake_Packet[4] = (byte)'o';
+                Handshake_Packet[5] = (byte)'k';
+                Handshake_Packet[6] = (byte)'e';
+                Handshake_Packet[7] = (byte)'y';
+            }
+            if (cb_MeterType.SelectedIndex == 4) // AK311 AK411 L151
+            {
+                Wait_Packet[4] = (byte)'B';
+                Wait_Packet[5] = (byte)'O';
+                Wait_Packet[6] = (byte)'O';
+                Wait_Packet[7] = (byte)'T';
+                Handshake_Packet[4] = (byte)'O';
+                Handshake_Packet[5] = (byte)'K';
+                Handshake_Packet[6] = (byte)'E';
+                Handshake_Packet[7] = (byte)'Y';
+            }
+            if (cb_MeterType.SelectedIndex == 5) // AK311 L451
+            {
+                Wait_Packet[4] = (byte)'b';
+                Wait_Packet[5] = (byte)'o';
+                Wait_Packet[6] = (byte)'o';
+                Wait_Packet[7] = (byte)'t';
+                Handshake_Packet[4] = (byte)'o';
+                Handshake_Packet[5] = (byte)'k';
+                Handshake_Packet[6] = (byte)'e';
+                Handshake_Packet[7] = (byte)'y';
+            }
+
+            while (FinishTotal!=WaitTotal || checkBox1.Checked == true)
+            {
+                sx1231.WriteRegisters();// reset registers
+                Thread.Sleep(10);
+
+                if (Radio_CatchAndSend_Packet(Wait_Packet, Handshake_Packet, 5000))
+                {
+                    Console.Text += Timestamp_String() + "Meter found and sending.\r\n";
+                    if (Radio_Transfer_Packet(8000))
+                    {
+                        Console.Text += Timestamp_String() + "Transfer successfully finished.\r\n";
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[3] >> 4, 16);
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[3] & 0xF, 16);
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[2] >> 4, 16);
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[2] & 0xF, 16);
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[1] >> 4, 16);
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[1] & 0xF, 16);
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[0] >> 4, 16);
+                        tb_FinishList.Text += Convert.ToString(Meter_No_Buffer[0] & 0xF, 16) + "\r\n";
+                        FinishTotal++;
+                        lb_FinishTotal.Text = "Total: " + FinishTotal.ToString();
+                        if (checkBox1.Checked == false)
+                        {
+                            MeterList[Procces_MeterIndex] = 0;
+                        }
+                    }
+                    else
+                    {
+                        Console.Text += Timestamp_String() + "Transfer Timeout.\r\n";
+                    }
+                }
+                else
+                {
+                    Console.Text += Timestamp_String() + "Meter search timeout.\r\n";
+                }
+                if (b_Stop.Enabled == false)
+                {
+                    return;
+                }
+            }
+            Console.Text += Timestamp_String() + "Finish updates.\r\n"; 
+            b_Stop_Click(null, null);
         }
         /*********************************************************/
         private void b_Stop_Click(object sender, EventArgs e)
         {
             b_Stop.Enabled = false;
-            b_Pause.Enabled = false;
             b_LoadFile.Enabled = true;
             b_Start.Enabled = true;
             gr_Config.Enabled = true;
+            pr_transmid.Value = 0;
+            pr_Load.Value = 0;
             Console.Text += Timestamp_String() + "Stop!\n";
         }
         /*********************************************************/
         private void tb_MeterNoStart_TextChanged(object sender, EventArgs e)
         {
+            byte[] MeterNoTemp = new byte[4];        
+
+            MeterNoTemp[3] = Convert.ToByte(tb_MeterNoStart.Text.Substring(0, 1));
+            MeterNoTemp[3] = (byte)(MeterNoTemp[3] << 4);
+            MeterNoTemp[3] += Convert.ToByte(tb_MeterNoStart.Text.Substring(1, 1));
+            MeterNoTemp[2] = Convert.ToByte(tb_MeterNoStart.Text.Substring(2, 1));
+            MeterNoTemp[2] = (byte)(MeterNoTemp[2] << 4);
+            MeterNoTemp[2] += Convert.ToByte(tb_MeterNoStart.Text.Substring(3, 1));
+            MeterNoTemp[1] = Convert.ToByte(tb_MeterNoStart.Text.Substring(4, 1));
+            MeterNoTemp[1] = (byte)(MeterNoTemp[1] << 4);
+            MeterNoTemp[1] += Convert.ToByte(tb_MeterNoStart.Text.Substring(5, 1));
+            MeterNoTemp[0] = Convert.ToByte(tb_MeterNoStart.Text.Substring(6, 1));
+            MeterNoTemp[0] = (byte)(MeterNoTemp[0] << 4);
+            MeterNoTemp[0] += Convert.ToByte(tb_MeterNoStart.Text.Substring(7, 1));
+
+            Meter_No_Buffer[0]=MeterNoTemp[0];
+            Meter_No_Buffer[1] = MeterNoTemp[1];
+            Meter_No_Buffer[2] = MeterNoTemp[2];
+            Meter_No_Buffer[3] = MeterNoTemp[3];
+
+            MeterNoStartInt = 0;
+            MeterNoStartInt += (MeterNoTemp[0] & 0xF);
+            MeterNoStartInt += (MeterNoTemp[0] >> 4) * 10;
+            MeterNoStartInt += (MeterNoTemp[1] & 0xF) * 100;
+            MeterNoStartInt += (MeterNoTemp[1] >> 4) * 1000;
+            MeterNoStartInt += (MeterNoTemp[2] & 0xF) * 10000;
+            MeterNoStartInt += (MeterNoTemp[2] >> 4) * 100000;
+            MeterNoStartInt += (MeterNoTemp[3] & 0xF) * 1000000;
+            MeterNoStartInt += (MeterNoTemp[3] >> 4) * 10000000;
+
             tb_MeterNoEnd.Text = tb_MeterNoStart.Text;
         }
         /*********************************************************/
-        private void b_test_Click(object sender, EventArgs e)
+        private void tb_MeterNoEnd_TextChanged(object sender, EventArgs e)
         {
-            byte[] buffer = { 0x88, 0x88, 0x88, 0x00, (byte)'o', (byte)'k', (byte)'e', (byte)'y' };
+            byte[] MeterNoTemp = new byte[4];            
 
-            Console.Text += Timestamp_String() + "Tx Start!\n";
+            MeterNoTemp[3] = Convert.ToByte(tb_MeterNoEnd.Text.Substring(0, 1));
+            MeterNoTemp[3] = (byte)(MeterNoTemp[3] << 4);
+            MeterNoTemp[3] += Convert.ToByte(tb_MeterNoEnd.Text.Substring(1, 1));
+            MeterNoTemp[2] = Convert.ToByte(tb_MeterNoEnd.Text.Substring(2, 1));
+            MeterNoTemp[2] = (byte)(MeterNoTemp[2] << 4);
+            MeterNoTemp[2] += Convert.ToByte(tb_MeterNoEnd.Text.Substring(3, 1));
+            MeterNoTemp[1] = Convert.ToByte(tb_MeterNoEnd.Text.Substring(4, 1));
+            MeterNoTemp[1] = (byte)(MeterNoTemp[1] << 4);
+            MeterNoTemp[1] += Convert.ToByte(tb_MeterNoEnd.Text.Substring(5, 1));
+            MeterNoTemp[0] = Convert.ToByte(tb_MeterNoEnd.Text.Substring(6, 1));
+            MeterNoTemp[0] = (byte)(MeterNoTemp[0] << 4);
+            MeterNoTemp[0] += Convert.ToByte(tb_MeterNoEnd.Text.Substring(7, 1));
 
-            sx1231.SetMessage(buffer);
-            sx1231.SetMessageLength(buffer.Length);
-            sx1231.SetMaxPacketNumber(40);
+            MeterNoEndInt = 0;
+            MeterNoEndInt += (MeterNoTemp[0] & 0xF);
+            MeterNoEndInt += (MeterNoTemp[0] >> 4) * 10;
+            MeterNoEndInt += (MeterNoTemp[1] & 0xF) * 100;
+            MeterNoEndInt += (MeterNoTemp[1] >> 4) * 1000;
+            MeterNoEndInt += (MeterNoTemp[2] & 0xF) * 10000;
+            MeterNoEndInt += (MeterNoTemp[2] >> 4) * 100000;
+            MeterNoEndInt += (MeterNoTemp[3] & 0xF) * 1000000;
+            MeterNoEndInt += (MeterNoTemp[3] >> 4) * 10000000;
 
-            sx1231.SetOperatingMode(OperatingModeEnum.Tx);
-            sx1231.Mode = OperatingModeEnum.Tx;
-
-            sx1231.SetPacketHandlerStartStop(true);
-
-            Console.Text += Timestamp_String() + "Tx Done.\n";
-        }
-        /*********************************************************/
-        private void button1_Click(object sender, EventArgs e)
-        {
-            byte[] buffer = { 0x22, 0x22, 0x22, 0x22, (byte)'O', (byte)'K', (byte)'E', (byte)'Y' };
-
-            Console.Text += Timestamp_String() + "Tx Start!\n";     
-
-                sx1231.SetMessage(buffer);
-                sx1231.SetMessageLength(buffer.Length);
-                sx1231.SetMaxPacketNumber(40);
-
-                sx1231.SetOperatingMode(OperatingModeEnum.Tx);
-                sx1231.Mode = OperatingModeEnum.Tx;
-
-                sx1231.SetPacketHandlerStartStop(true);
-
-            Console.Text += Timestamp_String() + "Tx Done.\n";
+            tb_FinishList.Clear();
+            FinishTotal = 0;
+            tb_WaitList.Clear();
+            MeterListSize = 0;
+            WaitTotal = 0;
+            if (MeterNoStartInt > MeterNoEndInt)
+            {
+                int temp = MeterNoEndInt;
+                for (int i=0;((i<1000) && (MeterNoStartInt >= temp)) ;i++)
+                {
+                    MeterList[i] = temp;
+                    MeterListSize++;
+                    temp++;                   
+                }
+                
+            }
+            else if (MeterNoStartInt < MeterNoEndInt)
+            {
+                int temp = MeterNoStartInt;
+                for (int i = 0; ((i < 1000) && (MeterNoEndInt >= temp)); i++)
+                {
+                    MeterList[i] = temp;
+                    MeterListSize++;
+                    temp++;
+                }
+            }
+            else
+            {
+                MeterList[0] = MeterNoStartInt;
+                MeterListSize++;
+            }            
+            for (int i = 0; i < MeterListSize; i++)
+            {
+                if (MeterList[i] != 0)
+                {
+                    tb_WaitList.Text += MeterList[i].ToString("D8") + "\r\n";
+                    WaitTotal++;
+                }
+            }
+            lb_WaitTotal.Text = "Total: " + WaitTotal.ToString();            
         }
         /*********************************************************/
         static bool ByteArrayCompare(byte[] b1, byte[] b2)
         {
-            // Validate buffers are the same length.
-            // This also ensures that the count does not exceed the length of either buffer.  
             return b1.Length == b2.Length && memcmp(b1, b2, b1.Length) == 0;
         }
         /*********************************************************/
-        private void button2_Click(object sender, EventArgs e)
+        private void Radio_Transmit_Done(object sender, EventArgs e)
         {
-            byte[] buffer = { 0x22, 0x22, 0x22, 0x22, (byte)'B', (byte)'O', (byte)'O', (byte)'T' };
-            byte[] buffer2 = { 0x22, 0x22, 0x22, 0x22, (byte)'B', (byte)'O', (byte)'O', (byte)' ' };
-            SemtechLib.Devices.SX1231.General.Packet MyPacket = sx1231.Packet; 
-
-            Console.Text += Timestamp_String() + "Rx Start!\n";
-
-            sx1231.SetMessage(buffer2);
-            sx1231.SetMessageLength(buffer2.Length);
-            sx1231.SetMaxPacketNumber(1);
-
-            sx1231.SetOperatingMode(OperatingModeEnum.Rx);
-            sx1231.Mode = OperatingModeEnum.Rx;
-
-            sx1231.SetPacketHandlerStartStop(true);
- 
-
-            while (true)
-            {
-                Thread.Sleep(10);
-                if ((MyPacket.MessageLength == buffer.Length) && (memcmp(MyPacket.Message, buffer, buffer.Length) == 0))
-                {
-                    break;
-                }
-            }
-            Console.Text += Timestamp_String() + "Rx Done.\n";
+            Tx_Packet_Done_Flag = true;
         }
         /*********************************************************/
         private void Radio_Receive_Done(object sender, EventArgs e)
         {
             Rx_Packet_Done_Flag = true;                
-        }
-        /*********************************************************/
-        private void Radio_Transmitted_Done(object sender, EventArgs e)
-        {
-            Tx_Packet_Done_Flag = true;
         }
         /*********************************************************/
         private bool Radio_Send_Packet(byte[] buffer, int retry, int timeout_ms)
@@ -2335,7 +2461,7 @@ namespace SX1231SKB
             sx1231.SetOperatingMode(OperatingModeEnum.Tx);
             sx1231.Mode = OperatingModeEnum.Tx;
 
-            sx1231.SetPacketHandlerStartStop(true);                      
+            sx1231.SetPacketHandlerStartStop(true);
 
             DateTime desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
 
@@ -2351,9 +2477,10 @@ namespace SX1231SKB
                 Thread.Sleep(1);
                 System.Windows.Forms.Application.DoEvents();
             }
+            sx1231.SetPacketHandlerStartStop(false);
             sx1231.SetOperatingMode(OperatingModeEnum.Stdby);
             sx1231.Mode = OperatingModeEnum.Stdby;
-            return status;            
+            return status;
         }
         /*********************************************************/
         private bool Radio_Get_Packet(int length, int timeout_ms)
@@ -2363,7 +2490,7 @@ namespace SX1231SKB
             sx1231.SetMessage(buff_rx);
             sx1231.SetMessageLength(length);
 
-            sx1231.SetMaxPacketNumber(2);
+            sx1231.SetMaxPacketNumber(1);
 
             sx1231.SetOperatingMode(OperatingModeEnum.Rx);
             sx1231.Mode = OperatingModeEnum.Rx;
@@ -2382,42 +2509,277 @@ namespace SX1231SKB
                 }
                 Thread.Sleep(1);
                 System.Windows.Forms.Application.DoEvents();
-            }            
+            }
+            sx1231.SetPacketHandlerStartStop(false);
             sx1231.SetOperatingMode(OperatingModeEnum.Stdby);
             sx1231.Mode = OperatingModeEnum.Stdby;
             return status;            
         }
         /*********************************************************/
-        private void button3_Click(object sender, EventArgs e)
+        private bool Radio_CatchAndSend_Packet(byte[] compare_buffer, byte[] send_buffer, int timeout_ms)
         {
+            byte[] buff_rx = new byte[compare_buffer.Length];
+            bool status = true;
+            int meterno_temp;
+            int i;
             SemtechLib.Devices.SX1231.General.Packet MyPacket = sx1231.Packet;
 
-            if (Radio_Get_Packet(8, 3000))
+            sx1231.SetMessage(buff_rx);
+            sx1231.SetMessageLength(buff_rx.Length);
+
+            sx1231.SetMaxPacketNumber(1);
+
+            sx1231.SetOperatingMode(OperatingModeEnum.Rx);
+            sx1231.Mode = OperatingModeEnum.Rx;
+
+            sx1231.SetPacketHandlerStartStop(true);
+
+            Rx_Packet_Done_Flag = false;
+
+            DateTime desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
+
+            while (true)
             {
-                Console.Text += Timestamp_String() + BitConverter.ToString(MyPacket.Message) + "\r\n";
+                if (Rx_Packet_Done_Flag  == true)
+                {
+                    meterno_temp = Convert_ToDec(MyPacket.Message);
+                    for (i = 0; i < MeterListSize; i++)
+                    {
+                        if (MeterList[i] == meterno_temp)
+                        {
+                            Procces_MeterIndex = i;
+                            break;
+                        }
+                    }
+                    if (i != MeterListSize && MyPacket.Message[4] == compare_buffer[4] && MyPacket.Message[5] == compare_buffer[5] &&
+                        MyPacket.Message[6]== compare_buffer[6] && MyPacket.Message[7]== compare_buffer[7])
+                    {
+                        sx1231.SetPayloadLength(8);
+                        send_buffer[0] = MyPacket.Message[0];
+                        send_buffer[1] = MyPacket.Message[1];
+                        send_buffer[2] = MyPacket.Message[2];
+                        send_buffer[3] = MyPacket.Message[3];
+                        sx1231.TransmitRfData(send_buffer);
+                        Thread.Sleep(5);
+                        sx1231.TransmitRfData(send_buffer);
+                        Thread.Sleep(5);
+                        sx1231.TransmitRfData(send_buffer);
+                        Thread.Sleep(5);
+                        sx1231.TransmitRfData(send_buffer);
+                        Thread.Sleep(5);
+                        sx1231.TransmitRfData(send_buffer);
+                        Thread.Sleep(5);
+                        sx1231.TransmitRfData(send_buffer);
+                        Thread.Sleep(5);
+                        break;
+                    }
+                    Rx_Packet_Done_Flag = false;
+                }
+                if (DateTime.Now > desired_time)
+                {
+                    status = false;// timeout
+                    break;
+                }
+                Thread.Sleep(1);
+                System.Windows.Forms.Application.DoEvents();
+                if (b_Stop.Enabled == false)
+                {
+                    status = false;// timeout
+                    break;
+                }
+            }
+            sx1231.SetPacketHandlerStartStop(false);
+            sx1231.SetOperatingMode(OperatingModeEnum.Stdby);
+            sx1231.Mode = OperatingModeEnum.Stdby;
+            return status;
+        }
+        /*********************************************************/
+        private bool Radio_Transfer_Packet(int timeout_ms)
+        {
+            bool status = false;
+            byte[] compare_buffer_same = new byte[8];
+            byte[] compare_buffer_next = new byte[8];
+            byte[] compare_buffer_finish = new byte[6];
+            byte[] buff_rx = new byte[8];
+            byte[] send_buffer = new byte[64];
+            int transmid=0;
+            Convert_ToBCDByteArray(MeterList[Procces_MeterIndex], ref Meter_No_Buffer);
+
+            if (cb_MeterType.SelectedIndex < 4) // TK_AMR_LORA TK1C L451 L151
+            {
+                compare_buffer_next[0] = Meter_No_Buffer[3];
+                compare_buffer_next[1] = Meter_No_Buffer[2];
+                compare_buffer_next[2] = Meter_No_Buffer[1];
+                compare_buffer_next[3] = Meter_No_Buffer[0];
+
+                compare_buffer_same[0] = Meter_No_Buffer[3];
+                compare_buffer_same[1] = Meter_No_Buffer[2];
+                compare_buffer_same[2] = Meter_No_Buffer[1];
+                compare_buffer_same[3] = Meter_No_Buffer[0];
             }
             else
             {
-                Console.Text += Timestamp_String() + "Timeout Rx\r\n";
-            }           
+                compare_buffer_next[0] = Meter_No_Buffer[0];
+                compare_buffer_next[1] = Meter_No_Buffer[1];
+                compare_buffer_next[2] = Meter_No_Buffer[2];
+                compare_buffer_next[3] = Meter_No_Buffer[3];
+
+                compare_buffer_same[0] = Meter_No_Buffer[0];
+                compare_buffer_same[1] = Meter_No_Buffer[1];
+                compare_buffer_same[2] = Meter_No_Buffer[2];
+                compare_buffer_same[3] = Meter_No_Buffer[3];
+            }
+                compare_buffer_next[4] = 0x00;
+                compare_buffer_next[5] = 0x00;
+                compare_buffer_next[6] = 0xAA;
+                compare_buffer_next[7] = 0xAA;
+
+                compare_buffer_finish[0] = Meter_No_Buffer[0];
+                compare_buffer_finish[1] = Meter_No_Buffer[1];
+                compare_buffer_finish[2] = Meter_No_Buffer[2];
+                compare_buffer_finish[3] = Meter_No_Buffer[3];
+                compare_buffer_finish[4] = 0xFF;
+                compare_buffer_finish[5] = 0xFF;
+
+                PacketIndex = 0;
+                SemtechLib.Devices.SX1231.General.Packet MyPacket = sx1231.Packet;
+
+                sx1231.SetMessage(buff_rx);
+                sx1231.SetMessageLength(buff_rx.Length);
+
+                sx1231.SetMaxPacketNumber(1);
+
+                sx1231.SetOperatingMode(OperatingModeEnum.Rx);
+                sx1231.Mode = OperatingModeEnum.Rx;
+
+                sx1231.SetPacketHandlerStartStop(true);
+
+                Rx_Packet_Done_Flag = false;
+
+                DateTime desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
+
+                while (true)
+                {
+                    if (Rx_Packet_Done_Flag == true)
+                    {
+                        if (memcmp(MyPacket.Message, compare_buffer_same, 8) == 0)
+                        {
+                            desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
+                            sx1231.SetPayloadLength(64);
+                            sx1231.TransmitRfData(send_buffer);
+                            Thread.Sleep(12);
+                            Console.Text += Timestamp_String() + "Lost Packet:" + PacketIndex.ToString() + "\r\n";
+                        }
+                        else if (memcmp(MyPacket.Message, compare_buffer_next, 8) == 0)
+                        {
+                            desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
+
+                            FileIndex = PacketIndex * 58;
+
+                            if (FileSize + 58 < FileIndex) // son paket isteği
+                            {
+                                send_buffer[0] = Meter_No_Buffer[0];
+                                send_buffer[1] = Meter_No_Buffer[1];
+                                send_buffer[2] = Meter_No_Buffer[2];
+                                send_buffer[3] = Meter_No_Buffer[3];
+                                send_buffer[4] = 0xFF;
+                                send_buffer[5] = 0xFF;
+                                send_buffer[6] = Crc_Buff[3];
+                                send_buffer[7] = Crc_Buff[2];
+                                send_buffer[8] = Crc_Buff[1];
+                                send_buffer[9] = Crc_Buff[0];
+                                send_buffer[10] = (byte)(FileSize >> 24);
+                                send_buffer[11] = (byte)(FileSize >> 16);
+                                send_buffer[12] = (byte)(FileSize >> 8);
+                                send_buffer[13] = (byte)FileSize;
+                                sx1231.SetPayloadLength(64);
+                                sx1231.TransmitRfData(send_buffer);
+                                Thread.Sleep(12);
+                            }
+                            else
+                            {
+                                pr_Load.Value = (int)(FileIndex / 100);
+                                int per = (int)(((float)FileIndex / (float)FileSize) * 100);
+                                lb_percent.Text = "% " + per.ToString();
+
+                                pr_transmid.Value = transmid;
+                                transmid++;
+                                transmid %= 20;
+
+                                compare_buffer_same[4] = (byte)(PacketIndex >> 8);
+                                compare_buffer_same[5] = (byte)(PacketIndex & 0xFF);
+                                compare_buffer_same[6] = 0xAA;
+                                compare_buffer_same[7] = 0xAA;
+
+                                send_buffer[0] = Meter_No_Buffer[0];
+                                send_buffer[1] = Meter_No_Buffer[1];
+                                send_buffer[2] = Meter_No_Buffer[2];
+                                send_buffer[3] = Meter_No_Buffer[3];
+                                send_buffer[4] = (byte)(PacketIndex >> 8);
+                                send_buffer[5] = (byte)(PacketIndex & 0xFF);
+
+                                Buffer.BlockCopy(BinFile, (int)FileIndex, send_buffer, 6, 58);
+                                FileIndex += 58;
+
+                                sx1231.SetPayloadLength(64);
+                                sx1231.TransmitRfData(send_buffer);
+                                Thread.Sleep(12);
+
+                                PacketIndex++;
+
+                                compare_buffer_next[4] = (byte)(PacketIndex >> 8);
+                                compare_buffer_next[5] = (byte)(PacketIndex & 0xFF);
+                                compare_buffer_next[6] = 0xAA;
+                                compare_buffer_next[7] = 0xAA;
+                            }
+                        }
+                        else if (memcmp(MyPacket.Message, compare_buffer_finish, 6) == 0)
+                        {
+                            desired_time = DateTime.Now.AddMilliseconds(timeout_ms);
+                            status = true;
+                            break;
+                        }
+                        Rx_Packet_Done_Flag = false;
+                        sx1231.SetPayloadLength(8);
+                        sx1231.SetOperatingMode(OperatingModeEnum.Rx, true);
+                    }
+                    if (DateTime.Now > desired_time)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(0);
+                    System.Windows.Forms.Application.DoEvents();
+                    if (b_Stop.Enabled == false)
+                    {
+                        status = false;// timeout
+                        break;
+                    }
+                }
+                sx1231.SetPacketHandlerStartStop(false);
+                sx1231.SetOperatingMode(OperatingModeEnum.Stdby);
+                sx1231.Mode = OperatingModeEnum.Stdby;
+                return status;
         }
         /*********************************************************/
-        private void button4_Click(object sender, EventArgs e)
-        {
-            byte[] buffer = { 0x22, 0x22, 0x22, 0x22, (byte)'O', (byte)'K', (byte)'E', (byte)'Y' };
+        /*********************************************************/
+        /*********************************************************/
 
-            for (int i = 0; i < 100; i++)
-            {
-                if (Radio_Send_Packet(buffer,25, 2000))
-                {
-                    Console.Text += Timestamp_String() + "Tx Done\r\n";
-                }
-                else
-                {
-                    Console.Text += Timestamp_String() + "Timeout Tx\r\n";
-                }
-            }              
-        }
+
+        /*********************************************************/
+        /*********************************************************/
+        /*********************************************************/
+        /*********************************************************/
+        /*********************************************************/
+        /*********************************************************/
+        /*********************************************************/
+        /*********************************************************/
+
+
+
+
+
+
+
         /*********************************************************/
         /*********************************************************/
         /*********************************************************/

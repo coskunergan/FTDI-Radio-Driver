@@ -129,7 +129,6 @@ C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\sx1231skb.
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\sx1231skb.pdb
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\SemtechLib.Devices.SX1231.dll
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\SemtechLib.dll
-C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\FTD2XX_NET.dll
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\ZedGraph.dll
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\FTD2XX_NET.pdb
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\bin\Debug\SemtechLib.pdb
