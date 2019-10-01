@@ -2333,7 +2333,12 @@ namespace SX1231SKB
         /*********************************************************/
         private void tb_MeterNoStart_TextChanged(object sender, EventArgs e)
         {
-            byte[] MeterNoTemp = new byte[4];        
+            byte[] MeterNoTemp = new byte[4];
+
+            if (tb_MeterNoStart.Text.Length != 8)
+            {
+                return;
+            }
 
             MeterNoTemp[3] = Convert.ToByte(tb_MeterNoStart.Text.Substring(0, 1));
             MeterNoTemp[3] = (byte)(MeterNoTemp[3] << 4);
@@ -2368,8 +2373,12 @@ namespace SX1231SKB
         /*********************************************************/
         private void tb_MeterNoEnd_TextChanged(object sender, EventArgs e)
         {
-            byte[] MeterNoTemp = new byte[4];            
+            byte[] MeterNoTemp = new byte[4];
 
+            if (tb_MeterNoEnd.Text.Length != 8)
+            {
+                return;
+            }
             MeterNoTemp[3] = Convert.ToByte(tb_MeterNoEnd.Text.Substring(0, 1));
             MeterNoTemp[3] = (byte)(MeterNoTemp[3] << 4);
             MeterNoTemp[3] += Convert.ToByte(tb_MeterNoEnd.Text.Substring(1, 1));

@@ -16,3 +16,12 @@ C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\FTD2XX_NET\obj\Debug\FTD2XX_NE
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\FTD2XX_NET\obj\Debug\FTD2XX_NET.csproj.GenerateResource.Cache
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\FTD2XX_NET\obj\Debug\FTD2XX_NET.dll
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\FTD2XX_NET\obj\Debug\FTD2XX_NET.pdb
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\bin\Debug\ftd2xx.dll
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\bin\Debug\ftd2xx64.dll
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\bin\Debug\FTD2XX_NET.dll
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\bin\Debug\FTD2XX_NET.pdb
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\obj\Debug\FTD2XX_NET.Properties.Resources.resources
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\obj\Debug\FTD2XX_NET.csproj.GenerateResource.Cache
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\obj\Debug\FTD2XX_NET.dll
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\FTD2XX_NET\obj\Debug\FTD2XX_NET.pdb

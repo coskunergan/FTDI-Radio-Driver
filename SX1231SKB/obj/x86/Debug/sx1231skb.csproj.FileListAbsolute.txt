@@ -141,3 +141,74 @@ C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\obj\x86\Debug\SX1231
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\obj\x86\Debug\sx1231skb.csproj.GenerateResource.Cache
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\obj\x86\Debug\sx1231skb.exe
 C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_radio\sx1231skb\obj\x86\Debug\sx1231skb.pdb
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\Battery management.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\Bit synchronizer Data mode.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\Device status.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\General.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\Listen mode.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\Modulation.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\Operating mode.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Common\Oscillators.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\global.css
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Irq mapping\Clock out.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Irq mapping\DIO mapping.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Irq mapping\Irq flags.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\overview.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Address filtering.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Aes encryption.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Aes key value.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Broadcast address.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Control.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Crc auto clear.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Crc calculation.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Dc free.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Fifo fill condition.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Fifo threshold.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Inter packet rx delay.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Intermediate mode enter.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Intermediate mode exit.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Intermediate mode.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Message.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Node address.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Packet format.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Payload length.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Preamble size.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Repeat value.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\StartStop.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Sync word size.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Sync word tolerance.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Sync word value.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Sync word.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Tx packets.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Packet handler\Tx start.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Afc bandwidth.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Afc Fei.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Agc.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Dagc.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Lna.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Ook.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Rssi.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Receiver\Rx bandwidth.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Temperature\Calibrate.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Temperature\Measure running.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Temperature\Thermometer.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Transmitter\Output power.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Transmitter\Overload current protection.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\Doc\Transmitter\Power amplifier.html
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\sx1231skb_usersguide.pdf
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\sx1231skb.exe
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\sx1231skb.pdb
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\SemtechLib.Devices.SX1231.dll
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\SemtechLib.dll
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\ZedGraph.dll
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\FTD2XX_NET.pdb
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\SemtechLib.pdb
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\bin\Debug\SemtechLib.Devices.SX1231.pdb
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\SX1231SKB.AboutBox.resources
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\SX1231SKB.HelpForm.resources
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\SX1231SKB.MainForm.resources
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\SX1231SKB.Properties.Resources.resources
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\sx1231skb.csproj.GenerateResource.Cache
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\sx1231skb.exe
+C:\Users\Coskun ERGAN\Desktop\FTDI_SPI\ftdi_github\Ftdi_RadioDriver\sx1231skb\obj\x86\Debug\sx1231skb.pdb
